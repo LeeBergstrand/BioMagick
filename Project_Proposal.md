@@ -53,10 +53,21 @@ The primary inspiration for BioMagick is the [ImageMagick](http://www.imagemagic
 BioMagick will be a next generation bioinformatics file format converter and sequence feature extractor built from Biopython's [SeqIO](http://biopython.org/wiki/SeqIO), [AlignIO](http://biopython.org/wiki/AlignIO), [Phylo](http://biopython.org/wiki/Phylo) classes. It will contain a class for auto-recognition of text based Bioinformatics formats. It will also posses value added features such as the ability to extract sequence features such as protein coding or 16s rRNA genes and the ability to display certain statistics about an input file, for example how many DNA sequences are contained within. The command line user interface (CLI) will be POSIX/GNU standard and will allow piped input from other UNIX programs and the input of multiple files. Automated tests will be created to validate that BioMagick is providing the correct output. Documentation will be in the form of a Github wiki and a UNIX Man page. BioMagick will be open source and released under [MIT License](http://en.wikipedia.org/wiki/MIT_License).
 
 ## Project Details
-- ### Architecture and Environment
-- ### Implementation Issues and Challenges
-- ### Deliverables
-- ### Timeline
+
+### Architecture and Environment
+
+BioMagick will be designed to be run on [LINUX](http://en.wikipedia.org/wiki/Linux) and [Mac OSX](http://en.wikipedia.org/wiki/OS_X). The programming language we will use is [Python](https://www.python.org) and we will support the following Phython interpreters:
+
+- CPython 2.6, 2.7, 3.3, 3.4 -- see [http://www.python.org](http://www.python.org)
+
+- PyPy 2.0, 2.1, 2.2, 2.3 -- see [http://www.pypy.org](http://www.pypy.org)
+
+We will also support the Python 2.7x and Python 3.0-3.4 versions of the python language.
+
+ 
+### Implementation Issues and Challenges
+### Deliverables
+### Timeline
 
 ## Conclusion
 
