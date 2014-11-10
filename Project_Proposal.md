@@ -58,19 +58,66 @@ BioMagick will be a next generation bioinformatics file format converter and seq
 
 ##### Languages and Platforms
 
-BioMagick will be designed to be run on [LINUX](http://en.wikipedia.org/wiki/Linux) and [Mac OSX](http://en.wikipedia.org/wiki/OS_X). The programming language we will use is [Python](https://www.python.org) and we will support the following Phython interpreters:
+BioMagick will be designed to be run on [LINUX](http://en.wikipedia.org/wiki/Linux) and [Mac OSX](http://en.wikipedia.org/wiki/OS_X). The programming language we will use is [Python](https://www.python.org) and we will support the following Python interpreters:
 
 - CPython 2.6, 2.7, 3.3, 3.4 -- see [http://www.python.org](http://www.python.org)
 
 - PyPy 2.0, 2.1, 2.2, 2.3 -- see [http://www.pypy.org](http://www.pypy.org)
 
-We will also support the Python 2.7 and Python 3.0-3.4 versions of the Python language. Do to Python being an interpreted language, BioMagick should run on most hardware platforms supported by Linux (x86, Power, ARM etc.). However, our testing can only gaurentee full functionality on [x86 hardware](http://en.wikipedia.org/wiki/X86) (Intel and AMD)
+We will also support the Python 2.7 and Python 3.0-3.4 versions of the Python language. Do to Python being an interpreted language, BioMagick should run on most hardware platforms supported by Linux (x86, Power, ARM etc.). However, our testing will only guarantee full functionality on [x86 hardware](http://en.wikipedia.org/wiki/X86) (Intel and AMD)
 
 ##### Biopython
 
-A core componet of BioMagick will be the [Biopython](http://biopython.org/wiki/Main_Page) library. Specifically the [SeqIO](http://biopython.org/wiki/SeqIO), [AlignIO](http://biopython.org/wiki/AlignIO), [Phylo](http://biopython.org/wiki/Phylo) classes from Biopython will be heavily used for parsing, converting and writing bioinformatics file formats. It can also be used to 
+A core component of BioMagick will be the [Biopython](http://biopython.org/wiki/Main_Page) library. Specifically, the [SeqIO](http://biopython.org/wiki/SeqIO), [AlignIO](http://biopython.org/wiki/AlignIO), [Phylo](http://biopython.org/wiki/Phylo) classes from Biopython will be heavily utilized for parsing, converting and writing bioinformatics file formats. They can also be used for various other tasks  such as extracting protein coding genes.
 
+Some useful Biopython features:
+
+- A generic sequence record object for storing genomic sequences along with their features (for example the position of genes within the sequence).
+- Parsers for various bioinformatics file formats and storing them as sequence record objects.
+- Writers for serializing sequence record objects into various bioinformatic file formats.
+
+######  Biopython code example #1:
+
+	from Bio import SeqIO
+	handle = open("example.fasta", "rU") # Opens a file handle.	
+	
+	# Parses input file which contains mutiple FASTA formated sequences.
+	# Parses each FASTA formated sequence into a generic sequence record object.
+	for record in SeqIO.parse(handle, "fasta") : 
+    	print record.id # Prints the id of each sequence.
+	handle.close()
+
+######  Biopython code example #2:
+
+	from Bio import SeqIO
+	input_handle = open("cor6_6.gb", "rU") 
+	output_handle = open("cor6_6.fasta", "w")
+	
+	# Parses each Genbank file into a generic sequence record object.
+	sequences = SeqIO.parse(input_handle, "genbank") # Opens a file handle.
+	
+	# Write sequence record objects to file in FASTA format.
+	SeqIO.write(sequences, output_handle, "fasta")
  
+	output_handle.close()
+	input_handle.close()
+	
+The author has used Biopython in the past to create software systems. Here are some examples:
+
+- [Genbank-Downloaders](https://github.com/LeeBergstrand/Genbank-Downloaders) - A series of small Biopython scripts for downloading sequence data off NCBI's Genbank.
+- [BackBLAST_Reciprocal_BLAST](https://github.com/LeeBergstrand/BackBLAST_Reciprocal_BLAST) -  A reciprocal BLAST program for filtering down BLAST results to best bidirectional hits. 
+- [HMMER-DB](https://github.com/LeeBergstrand/HMMER-DB) - A program for searching, extracting and storing proteins that match specific Hidden Markov Models created by HMMER.
+
+##### Automatic Identification of Bioinformatic File Formats.
+
+One of the features the author seeks to include into BioMagick is the ability to automatically recognize textual bioinformatics file formats. Once identified the file type of an input file would be passed on to Biopython. Automatic identification of file format is not included in Biopython. When using the SeqIO class one has to explicitly identify input file  type. This was a conscious decision by Biopython's creators. 
+
+[BioPerl's SeqIO](http://bioperl.org/wiki/HOWTO:SeqIO) class (the Perl equivalent to Biopython's SeqIO class) is capable of automatically identifying a limited set of input file types. For identification of file type one could reverse engineer BioPerl's SeqIO classes's methodologies for identifying file type or perhaps take a more generic approach by using a library like [libmagic](http://linux.die.net/man/3/libmagic) to identify the input file.
+
+##### Command Line Interface Libraries
+
+A command line library will be used to parse user input. Some possible libraries are [Clint](https://pypi.python.org/pypi/clint/), [Click](http://click.pocoo.org/3/) or [Cliff](http://cliff.readthedocs.org/en/latest/).
+
 ### Implementation Issues and Challenges
 ### Deliverables
 ### Timeline
