@@ -154,6 +154,7 @@ We will be using the [Git](http://git-scm.com) version control system for source
 - Documentation:
 	- For the file identification class.
 	- For the command line interface. 
+- Poster describing work competed.
 
 ### Timeline
 
