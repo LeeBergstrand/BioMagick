@@ -102,7 +102,7 @@ Some useful Biopython features:
 	output_handle.close()
 	input_handle.close()
 	
-The author has used Biopython in the past to create software systems. Here are some examples:
+The author has used Biopython to create software systems in the past. Here are some examples:
 
 - [Genbank-Downloaders](https://github.com/LeeBergstrand/Genbank-Downloaders) - A series of small Biopython scripts for downloading sequence data off NCBI's Genbank.
 - [BackBLAST_Reciprocal_BLAST](https://github.com/LeeBergstrand/BackBLAST_Reciprocal_BLAST) -  A reciprocal BLAST program for filtering down BLAST results to best bidirectional hits. 
@@ -117,6 +117,12 @@ One of the features the author seeks to include into BioMagick is the ability to
 ##### Command Line Interface Libraries
 
 A command line library will be used to parse user input. Some possible libraries are [Clint](https://pypi.python.org/pypi/clint/), [Click](http://click.pocoo.org/3/) or [Cliff](http://cliff.readthedocs.org/en/latest/).
+
+##### Architecture
+
+###### Generalized Data Flow Diagram
+
+
 
 ### Implementation Issues and Challenges
 ### Deliverables
