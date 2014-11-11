@@ -82,29 +82,33 @@ Some useful Biopython features:
 
 ######  Biopython code example #1:
 
-	from Bio import SeqIO
-	handle = open("example.fasta", "rU") # Opens a file handle.	
+```python
+from Bio import SeqIO
+handle = open("example.fasta", "rU") # Opens a file handle.	
 	
-	# Parses input file which contains mutiple FASTA formated sequences.
-	# Parses each FASTA formated sequence into a generic sequence record object.
-	for record in SeqIO.parse(handle, "fasta") : 
-    	print record.id # Prints the id of each sequence.
-	handle.close()
-
+# Parses input file which contains mutiple FASTA formated sequences.
+# Parses each FASTA formated sequence into a generic sequence record object.
+for record in SeqIO.parse(handle, "fasta") : 
+	print record.id # Prints the id of each sequence.
+handle.close()
+```
+	
 ######  Biopython code example #2:
 
-	from Bio import SeqIO
-	input_handle = open("cor6_6.gb", "rU") 
-	output_handle = open("cor6_6.fasta", "w")
+```python
+from Bio import SeqIO
+input_handle = open("cor6_6.gb", "rU") 
+output_handle = open("cor6_6.fasta", "w")
 	
-	# Parses each Genbank file into a generic sequence record object.
-	sequences = SeqIO.parse(input_handle, "genbank") # Opens a file handle.
+# Parses each Genbank file into a generic sequence record object.
+sequences = SeqIO.parse(input_handle, "genbank") # Opens a file handle.
 	
-	# Write sequence record objects to file in FASTA format.
-	SeqIO.write(sequences, output_handle, "fasta")
+# Write sequence record objects to file in FASTA format.
+SeqIO.write(sequences, output_handle, "fasta")
  
-	output_handle.close()
-	input_handle.close()
+output_handle.close()
+input_handle.close()
+```
 	
 The author has used Biopython to create software systems in the past. Here are some examples:
 
@@ -158,6 +162,19 @@ We will be using the [Git](http://git-scm.com) version control system for source
 
 ### Timeline
 
-
+| Task                                                                                                       | Week | Month    |
+|------------------------------------------------------------------------------------------------------------|------|----------|
+| 4 + 1 Views Software Architecture Model                                                                    | 3    | January  |
+| Table of bioinformatic file formats supported by Biopython and these files respective filename extensions. | 4    | January  |
+| Test Plan Document                                                                                         | 1    | February |
+| Unit tests for the bioinformatic file identification class                                                 | 2    | February |
+| Integration and Acceptance Tests                                                                           | 3    | February |
+| Prototype program using filename extensions for automatic file type identification                         | 1    | March    |
+| Fully developed bioinformatic file identification class                                                    | 3    | March    |
+| Open source the project and open beta testing                                                              | 4    | March    |
+| Refactor and improve documentation                                                                         | 1    | April    |
+| Review beta feedback and bug fix                                                                           | 2    | April    |
+| Final Review Poster                                                                                        | 3    | April    |
+| Final Release                                                                                              | 4    | April    |
 
 ## Conclusion
