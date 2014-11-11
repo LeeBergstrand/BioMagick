@@ -82,29 +82,33 @@ Some useful Biopython features:
 
 ######  Biopython code example #1:
 
-	from Bio import SeqIO
-	handle = open("example.fasta", "rU") # Opens a file handle.	
+```python
+from Bio import SeqIO
+handle = open("example.fasta", "rU") # Opens a file handle.	
 	
-	# Parses input file which contains mutiple FASTA formated sequences.
-	# Parses each FASTA formated sequence into a generic sequence record object.
-	for record in SeqIO.parse(handle, "fasta") : 
-    	print record.id # Prints the id of each sequence.
-	handle.close()
-
+# Parses input file which contains mutiple FASTA formated sequences.
+# Parses each FASTA formated sequence into a generic sequence record object.
+for record in SeqIO.parse(handle, "fasta") : 
+	print record.id # Prints the id of each sequence.
+handle.close()
+```
+	
 ######  Biopython code example #2:
 
-	from Bio import SeqIO
-	input_handle = open("cor6_6.gb", "rU") 
-	output_handle = open("cor6_6.fasta", "w")
+```python
+from Bio import SeqIO
+input_handle = open("cor6_6.gb", "rU") 
+output_handle = open("cor6_6.fasta", "w")
 	
-	# Parses each Genbank file into a generic sequence record object.
-	sequences = SeqIO.parse(input_handle, "genbank") # Opens a file handle.
+# Parses each Genbank file into a generic sequence record object.
+sequences = SeqIO.parse(input_handle, "genbank") # Opens a file handle.
 	
-	# Write sequence record objects to file in FASTA format.
-	SeqIO.write(sequences, output_handle, "fasta")
+# Write sequence record objects to file in FASTA format.
+SeqIO.write(sequences, output_handle, "fasta")
  
-	output_handle.close()
-	input_handle.close()
+output_handle.close()
+input_handle.close()
+```
 	
 The author has used Biopython to create software systems in the past. Here are some examples:
 
