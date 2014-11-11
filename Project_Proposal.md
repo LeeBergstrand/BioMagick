@@ -161,6 +161,19 @@ We will be using the [Git](http://git-scm.com) version control system for source
 
 ### Timeline
 
-
+| Task                                                                                                       | Week | Month    |
+|------------------------------------------------------------------------------------------------------------|------|----------|
+| 4 + 1 Views Software Architecture Model                                                                    | 3    | January  |
+| Table of bioinformatic file formats supported by Biopython and these files respective filename extensions. | 4    | January  |
+| Test Plan Document                                                                                         | 1    | February |
+| Unit tests for the bioinformatic file identification class                                                 | 2    | February |
+| Integration and Acceptance Tests                                                                           | 3    | February |
+| Prototype program using filename extensions for automatic file type identification                         | 1    | March    |
+| Fully developed bioinformatic file identification class                                                    | 3    | March    |
+| Open source the project and open beta testing                                                              | 4    | March    |
+| Refactor and improve documentation                                                                         | 1    | April    |
+| Review beta feedback and bug fix                                                                           | 2    | April    |
+| Final Review Poster                                                                                        | 3    | April    |
+| Final Release                                                                                              | 4    | April    |
 
 ## Conclusion
