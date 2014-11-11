@@ -109,7 +109,24 @@ SeqIO.write(sequences, output_handle, "fasta")
 output_handle.close()
 input_handle.close()
 ```
-	
+
+Biopython can also be be used to extract sequence features from sequences if the input file has these features annotated as part of their file type. For example, when the Genbank file format, which contains annotations for certain sequence features, is parsed into a sequence record object these annotations are stored within the object and can be accessed and extracted by the programmer. 
+
+######  Biopython code example #3:
+
+```python 
+for feature in seqRecord.features:
+		if feature.type == "CDS": # If feature is a Coding DNA Strand
+			CDSLocal = feature.location # Gets the feature location
+			featQualifers = feature.qualifiers # Gets sequence quantifiers.
+			
+			# Gets sequence quantifiers.
+			gene       = str(featQualifers.get('gene','no_gene_name')).strip('\'[]')
+			product    = str(featQualifers.get('product','no_product_name')).strip('\'[]')
+			proteinID  = str(featQualifers.get('protein_id','no_protein_id')).strip('\'[]')
+			locus      = str(featQualifers.get('locus_tag','no_locus_tag')).strip('\'[]')
+```
+
 The author has used Biopython to create software systems in the past. Here are some examples:
 
 - [Genbank-Downloaders](https://github.com/LeeBergstrand/Genbank-Downloaders) - A series of small Biopython scripts for downloading sequence data off NCBI's Genbank.
@@ -160,15 +177,15 @@ We will be using the [Git](http://git-scm.com) version control system for source
 	- For the command line interface. 
 - Poster describing work competed.
 
-### Timeline
+### Putative Timeline
 
 | Task                                                                                                       | Week | Month    |
 |------------------------------------------------------------------------------------------------------------|------|----------|
 | 4 + 1 Views Software Architecture Model                                                                    | 3    | January  |
-| Table of bioinformatic file formats supported by Biopython and these files respective filename extensions. | 4    | January  |
-| Test Plan Document                                                                                         | 1    | February |
+| Table of bioinformatic file formats supported by Biopython and these file type's respective filename extensions. | 4    | January  |
+| Test plan document                                                                                         | 1    | February |
 | Unit tests for the bioinformatic file identification class                                                 | 2    | February |
-| Integration and Acceptance Tests                                                                           | 3    | February |
+| Integration and Acceptance tests                                                                           | 3    | February |
 | Prototype program using filename extensions for automatic file type identification                         | 1    | March    |
 | Fully developed bioinformatic file identification class                                                    | 3    | March    |
 | Open source the project and open beta testing                                                              | 4    | March    |
@@ -177,4 +194,15 @@ We will be using the [Git](http://git-scm.com) version control system for source
 | Final Review Poster                                                                                        | 3    | April    |
 | Final Release                                                                                              | 4    | April    |
 
+### Student Skills and Experience Developed
+
+- Experience building POSIX compliant command line programs
+- Writing automated regression tests
+- Running tests using Travis CI
+- Utilizing technologies for identifying textual file formats
+- Greater experience with Biopython
+- Experience in creating an open source project
+
 ## Conclusion
+
+BioMagick will be a command line program for conversion of various bioinformatics file formats. It will also have code for extracting certain sequence features from genomic data using Biopython. By building on existing expansive libraries such as Biopython we hope to reduce our time to completion thus, allowing us to focus on other value added features such as automatic input file identification. BioMagick shall be completed in a directed studies between January and April 2014.  
