@@ -66,6 +66,10 @@ BioMagick will be designed to be run on [LINUX](http://en.wikipedia.org/wiki/Lin
 
 We will also support the Python 2.7 and Python 3.0-3.4 versions of the Python language. Do to Python being an interpreted language, BioMagick should run on most hardware platforms supported by Linux (x86, Power, ARM etc.). However, our testing will only guarantee full functionality on [x86 hardware](http://en.wikipedia.org/wiki/X86) (Intel and AMD)
 
+##### Generalized Architectural Diagram
+
+![Generalized Architecture Diagram](https://github.com/LeeBergstrand/BioMagick/raw/master/media/DataFlow.png)
+
 ##### Biopython
 
 A core component of BioMagick will be the [Biopython](http://biopython.org/wiki/Main_Page) library. Specifically, the [SeqIO](http://biopython.org/wiki/SeqIO), [AlignIO](http://biopython.org/wiki/AlignIO), [Phylo](http://biopython.org/wiki/Phylo) classes from Biopython will be heavily utilized for parsing, converting and writing bioinformatics file formats. They can also be used for various other tasks  such as extracting protein coding genes.
@@ -118,16 +122,41 @@ One of the features the author seeks to include into BioMagick is the ability to
 
 A command line library will be used to parse user input. Some possible libraries are [Clint](https://pypi.python.org/pypi/clint/), [Click](http://click.pocoo.org/3/) or [Cliff](http://cliff.readthedocs.org/en/latest/).
 
-##### Architecture
+##### Testing and Continous Integration
 
-###### Generalized Data Flow Diagram
+[Automated regression tests](http://en.wikipedia.org/wiki/Regression_testing) will created to insure proper identification of bioinformatic file types. The [unittest](https://docs.python.org/2/library/unittest.html#module-unittest) module, which is built into Python's standard library, will be used as a testing framework. [Travis CI](https://travis-ci.org), a continuous integration service that is free for students and open source projects, will be used to run tests on each build of BioMagick. Biopython already uses automated regression testing to test the file parsing, writing and conversion of its SeqIO, AlignIO and Phylo classes, therefore we do not have to test this functionality. 
 
+In later stages of the project we will have users beta test Biomagick. Potential beta testers are the [Mohn Lab](http://www.cmde.science.ubc.ca/mohn/) (the authors previous employer) at University of British Columbia and the [Van Hamme Lab](http://faculty.tru.ca/jvanhamme/) at Thompson Rivers University.
 
+##### Version Control, Repository Hosting and Open Source Licensing
+
+We will be using the [Git](http://git-scm.com) version control system for source control. Biomagick will be hosted in a private repository on [Github](https://github.com). In later stages of testing we may move it to a public repository. BioMagick will be open-sourced and released under [MIT License](http://en.wikipedia.org/wiki/MIT_License).
 
 ### Implementation Issues and Challenges
+
+- Creating a module for identifying multiple text file formats in a high throughput manor (we would rather not write individual parsers for hundreds of formats) will be challenging.
+
+- Writing test case for the above modules will be time consuming. We should develop some abstraction to help us write these test cases in a more universal manor.
+
+- Some Bioinformatics formats such as [Genbank](http://www.ncbi.nlm.nih.gov/Sitemap/samplerecord.html) contain significantly more sequence data (for example information about the genes contained within a parent sequence) than other, more raw formats such as [FASTA](http://en.wikipedia.org/wiki/FASTA_format) (which only contains raw sequences). It will be important to decide which sequence formats can be can be effectively converted into another. For example, Biopython is capable of "up-converting" low information file formats to high information formats, for example Genbank to FASTA, however we should give the user a warning when this occurs to notify the user that the output file will not have full information. 
+
+
 ### Deliverables
+
+- 4 + 1 Views Software Architecture Model
+- Test plan and tests:
+	- Unit tests for the bioinformatic file identification class.
+	- Integration tests
+	- Acceptance tests
+- Table of bioinformatic file formats supported by Biopython and these files respective filename extensions.
+- Prototype program using filename extensions for automatic file type identification.
+- Fully developed bioinformatic file identification class.
+- Documentation:
+	- For the file identification class.
+	- For the command line interface. 
+
 ### Timeline
 
-## Conclusion
 
-## References
+
+## Conclusion
