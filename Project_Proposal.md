@@ -27,22 +27,22 @@ Several open source bioinformatics libraries have been created over the past thr
 
 ##### Current Standard
 
-The current standard for converting bioinformatics formats is writing your own scripts using classes from Biopython or BioPerl both of which can take care of file parsing and conversion. Unexperienced biologists often end up with one script per conversion and this results in them having to maintain hundreds of one-off scripts created by themselves or passed along to them by their co-workers. ([here is an example repository](https://github.com/carden24/Bioinformatics_scripts)). In addition, biologists often rush the creation of these scripts so they can move on to analyzing the biology. This often leads to conversion errors which may skew a researchers results. 
+The current standard for converting bioinformatics formats is writing your own scripts using classes from Biopython or BioPerl both of which can take care of file parsing and conversion. Unexperienced biologists often end up with one script per conversion and this results in them having to maintain hundreds of one-off scripts created by themselves or passed along to them by their co-workers. ([here is an example repository](https://github.com/carden24/Bioinformatics_scripts)). In addition, biologists often rush the creation of these scripts so they can move on to analyzing the biology. This often leads to conversion errors which may skew the researcher's results. 
 
 As the amount of biological sequence data is exponentially increasing, computational biologists are starting to move towards automated bioinformatic pipelines. However, building these pipelines off of a series of custom conversion scripts (often with the exact same internal data flow) is ultimately unsustainable and as a result an integrated bioinformatic file format cross-conversion tool will be required in the future.  
 
 ##### Existing Programs
 
-A variety of bioinformatic cross-conversion programs have been developed in the past however most have failed to obtain significant usage. These programs all have the following characteristics:
+A variety of bioinformatic file format cross-conversion programs have been developed in the past however most have failed to obtain significant usage. These programs all have the following characteristics:
 
-- A limited number input/output of file formats
+- A limited number of input/output file formats
 - Can only take one input file at a time
 - Unintuitive and/or non-[POSIX](http://en.wikipedia.org/wiki/POSIX) CLI
-- Were built using "older" programming languages such as C, Java or Shell in a unmaintainable way
+- Were built using "older" programming languages such as C, Java or shell in a unmaintainable way
 - Do not utilize existing open-source libraries that are modern and maintained
 - Generally do not auto-recognize the input file format  
  
-All of the bioinformatic file format conversion programs that the author has identified have either been web applications which can only covert the contents of a single text file that has been copy-pasted into a web form and sent to a server for conversion (ex. [Sequence Format Converter](http://genome.nci.nih.gov/tools/reformat.html), [readseq-web](http://iubio.bio.indiana.edu/cgi-bin/readseq.cgi), [fmtseq](http://www.bioinformatics.org/JaMBW/1/2/index.html)) or command line programs which are no longer maintain or have lost availability (ex. [ReadSeq](http://sourceforge.net/projects/readseq/), [BIOFFORC](http://www.ncbi.nlm.nih.gov/pmc/articles/PMC2639671/#!po=16.6667)). The most prominet and feature rich converter is [ReadSeq](http://sourceforge.net/projects/readseq/) which is also often utilized as the converter on the server side for a variety of web bioinformatic file converters. ReadSeq is over a decade old as its last source code update was on June 4, 2004. ReadSeq was also written in a old version of Java that is no longer supported by modern operating systems. Overall, there are no conversion programs based off of modern Bioinformatic libraries and most have little to no documentation.
+All of the bioinformatic file format conversion programs that the author has identified have either been web applications which can only convert the contents of a single text file that has been copy-pasted into a web form and sent to a server for conversion (ex. [Sequence Format Converter](http://genome.nci.nih.gov/tools/reformat.html), [readseq-web](http://iubio.bio.indiana.edu/cgi-bin/readseq.cgi), [fmtseq](http://www.bioinformatics.org/JaMBW/1/2/index.html)) or command line programs which are no longer maintain or have lost availability (ex. [ReadSeq](http://sourceforge.net/projects/readseq/), [BIOFFORC](http://www.ncbi.nlm.nih.gov/pmc/articles/PMC2639671/#!po=16.6667)). The most prominent and feature rich converter is [ReadSeq](http://sourceforge.net/projects/readseq/), which is a command line program. It is also utilized as the conversion program on the server side for a variety of bioinformatic file conversion web apps. ReadSeq is over a decade old as its last source code update was on June 4, 2004. ReadSeq was also written in a old version of Java that is no longer supported by modern operating systems. Overall, there are no conversion programs based off of modern Bioinformatic libraries and most have little to no documentation.
 
 ##### Inspiration
 
@@ -86,8 +86,8 @@ Some useful Biopython features:
 from Bio import SeqIO
 handle = open("example.fasta", "rU") # Opens a file handle.	
 	
-# Parses input file which contains mutiple FASTA formated sequences.
-# Parses each FASTA formated sequence into a generic sequence record object.
+# Parses input file which contains multiple FASTA formatted sequences.
+# Parses each FASTA formatted sequence into a generic sequence record object.
 for record in SeqIO.parse(handle, "fasta") : 
 	print record.id # Prints the id of each sequence.
 handle.close()
@@ -180,7 +180,7 @@ We will be using the [Git](http://git-scm.com) version control system for source
 - Documentation:
 	- For the file identification class.
 	- For the command line interface. 
-- Poster describing work competed.
+- Poster describing work completed.
 
 ### Putative Timeline
 
