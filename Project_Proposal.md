@@ -82,7 +82,7 @@ Some useful Biopython features:
 
 ######  Biopython code example #1:
 
-```
+```python
 from Bio import SeqIO
 handle = open("example.fasta", "rU") # Opens a file handle.	
 	
@@ -95,7 +95,7 @@ handle.close()
 	
 ######  Biopython code example #2:
 
-```
+```python
 from Bio import SeqIO
 input_handle = open("cor6_6.gb", "rU") 
 output_handle = open("cor6_6.fasta", "w")
@@ -114,7 +114,7 @@ Biopython can also be used to extract sequence features from sequences if the in
 
 ######  Biopython code example #3:
 
-``` 
+```python 
 for feature in seqRecord.features:
 	# If feature is a Coding DNA Strand
 	if feature.type == "CDS": 
