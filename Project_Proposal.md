@@ -211,4 +211,4 @@ We will be using the [Git](http://git-scm.com) version control system for source
 
 ## Conclusion
 
-BioMagick will be a command line program for the conversion of various bioinformatics file formats. It will also have code for extracting certain sequence features from genomic data using Biopython. By building on existing expansive libraries such as Biopython we hope to reduce our time to completion thus allowing us to focus on other value added features such as automatic input file identification. BioMagick shall be completed in a directed studies course between January and April 2014.  
+BioMagick will be a command line program for the conversion of various bioinformatics file formats. It will also have code for extracting certain sequence features from genomic data using Biopython. By building on existing expansive libraries such as Biopython we hope to reduce our time to completion thus allowing us to focus on other value added features such as automatic input file identification. BioMagick shall be completed in a directed studies course between January and April 2015.  
