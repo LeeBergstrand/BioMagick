@@ -15,7 +15,7 @@ With the democratization of [next generation sequencing (NGS)](http://en.wikiped
 
 ![Example bioinformatics pipeline.](http://www.broadinstitute.org/~bhaas/euk_annot_pipeline.png)
 
-Bioinformatic pipelines are designed to automate the processing, filtering and analyzing of sequencing data. They often consist of several command line tools pipelined together with shell scripts or build creation tools such as [GNU Make](http://en.wikipedia.org/wiki/Make_(software). In these pipelines the output from one bioinformatic tool is passed along to another, with each step in the pipeline acting to transform the sequence data into a more useful form. Often each tool in the pipeline was developed on its own and therefore creates inputs and outputs incompatible with other tools in the system. As a result "glue" code has to be developed in order to transform the output from one bioinformatic tool into an input compatible with another.
+Bioinformatic pipelines are designed to automate the processing, filtering and analyzing of sequencing data. They often consist of several command line tools pipelined together with shell scripts or build creation tools such as [GNU Make](http://en.wikipedia.org/wiki/Make_(software)). In these pipelines the output from one bioinformatic tool is passed along to another, with each step in the pipeline acting to transform the sequence data into a more useful form. Often each tool in the pipeline was developed on its own and therefore creates inputs and outputs incompatible with other tools in the system. As a result "glue" code has to be developed in order to transform the output from one bioinformatic tool into an input compatible with another.
 
 ### Bioinformatics Libraries
 
@@ -34,7 +34,7 @@ As the amount of biological sequence data is exponentially increasing, computati
 ##### Existing Programs
 
 A variety of bioinformatic file format cross-conversion programs have been developed in the past however most have failed to obtain significant usage. These programs all have the following characteristics:
-
+m
 - A limited number of input/output file formats
 - Can only take one input file at a time
 - Unintuitive and/or non-[POSIX](http://en.wikipedia.org/wiki/POSIX) CLI
@@ -158,13 +158,13 @@ We will be using the [Git](http://git-scm.com) version control system for source
 
 ### Implementation Issues and Challenges
 
-- We would not want to write individual parsers for hundreds of input file formats, however creating a module for identifying multiple text file formats in a high throughput manor would be challenging. 
+- We would not want to write individual parsers for hundreds of input file formats, however creating a module for identifying multiple text file formats in a high throughput manner would be challenging. 
 
-- Writing test cases will be time consuming. We should develop some abstractions to help us write these test cases in a more universal manor.
+- Writing test cases will be time consuming. We should develop some abstractions to help us write these test cases in a more universal manner.
 
 - Some Bioinformatics formats such as [Genbank](http://www.ncbi.nlm.nih.gov/Sitemap/samplerecord.html) contain significantly more sequence data (for example information about the genes contained within a parent sequence) than other, more raw formats such as [FASTA](http://en.wikipedia.org/wiki/FASTA_format) (which only contains raw sequences). It will be important to decide which sequence formats can be effectively converted into another. For example, Biopython is capable of "up-converting" low information file formats into high information file formats, for example FASTA to Genbank, however we should give the user a warning when this occurs to notify the user that the output file will not contain full information.
 
-- There are two versions of the Python language available 2.x and 3.x. Python 3.0 was released in 2008 and featured some major changes that broke backwards compatibility with older versions of Python. Python 2.x is no longer being maintained. Therefore, Python 2.x is legacy and Python 3.x is the present and future of the language. Python 2.x is still heavily used in production systems and has a larger number of available external packages. There are ways to write universal libraries that are compatible with both families of Python and this is the path Biopython has followed. We also intend to write BioMagick in the same manor though this may have some unforeseen challenges. 
+- There are two versions of the Python language available 2.x and 3.x. Python 3.0 was released in 2008 and featured some major changes that broke backwards compatibility with older versions of Python. Python 2.x is no longer being maintained. Therefore, Python 2.x is legacy and Python 3.x is the present and future of the language. Python 2.x is still heavily used in production systems and has a larger number of available external packages. There are ways to write universal libraries that are compatible with both families of Python and this is the path Biopython has followed. We also intend to write BioMagick in the same manner though this may have some unforeseen challenges. 
 
 ### Deliverables
 
