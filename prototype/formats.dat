@@ -1,0 +1,3 @@
+FASTA	^(#[^\n]+\n)?>gi[^\n]+\n[a-zA-Z\-]+
+FASTQ	\n?@[^\n]+\n[a-zA-Z\-]+\n\+[^\n]*\n[^\n]+
+GENBANK	LOCUS.+\nDEFINITION.+\n
