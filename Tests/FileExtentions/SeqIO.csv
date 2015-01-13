@@ -16,7 +16,7 @@ phd,*.phd,1.46,1.52,1.52,"PHD files are output from PHRED, used by PHRAP and CON
 phylip,*.phy or *.ph,1.43,1.43,No,An alignment format. Truncates names at 10 characters.,
 pir,*.pir,1.48,No,1.52,"A ""FASTA like"" format introduced by the National Biomedical Research Foundation (NBRF) for the Protein Information Resource (PIR) database, now part of UniProt.",
 seqxml,*.xml,1.58,1.58,No,Simple sequence XML file format.,
-sff,*.ssf,1.54,1.54,1.54,Standard Flowgram Format (SFF) binary files produced by Roche 454 and IonTorrent/IonProton sequencing machines.,
+sff,*.sff,1.54,1.54,1.54,Standard Flowgram Format (SFF) binary files produced by Roche 454 and IonTorrent/IonProton sequencing machines.,
 stockholm,"*.sto, *.sth",1.43,1.43,No,The Stockholm alignment format is also known as PFAM format.,
 swiss,*.sw,1.43,No,1.52,Swiss-Prot aka UniProt format. Uses Bio.SwissProt internally. See also the UniProt XML format.,
 tab,*.tsv,1.48,1.48,1.52,"Simple two column tab separated sequence files, where each line holds a record's identifier and sequence. For example, this is used by Aligent's eArray software when saving microarray probes in a minimal tab delimited text file.",
