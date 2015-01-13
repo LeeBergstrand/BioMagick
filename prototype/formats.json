@@ -1,6 +1,6 @@
 {"formats":[
-	{"type":"regex", "name":"FASTA", "regex":"^(#[^\n]+\n)?>gi[^\n]+\n[a-zA-Z\-]+"},
-	{"type":"regex", "name":"FASTQ", "regex":"\n?@[^\n]+\n[a-zA-Z\-]+\n\+[^\n]*\n[^\n]+"},
-	{"type":"regex", "name":"GENBANK", "regex":"LOCUS.+\nDEFINITION.+\n"},
+	{"type":"regex", "name":"FASTA", "regex":"^(#[^\\n]+\\n)?>gi[^\\n]+\\n[a-zA-Z\\-]+"},
+	{"type":"regex", "name":"FASTQ", "regex":"\\n?@[^\\n]+\\n[a-zA-Z\\-]+\\n\\+[^\\n]*\\n[^\\n]+"},
+	{"type":"regex", "name":"GENBANK", "regex":"LOCUS.+\\nDEFINITION.+\\n"},
 	{"type":"bytes", "name":"TEST", "bytes":["", "", ""]}
 ]}
