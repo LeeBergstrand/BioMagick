@@ -1,6 +1,7 @@
 {"formats":[
-	{"type":"regex", "name":"FASTA", "regex":"^(#[^\\n]+\\n)?>gi[^\\n]+\\n[a-zA-Z\\-]+"},
-	{"type":"regex", "name":"FASTQ", "regex":"\\n?@[^\\n]+\\n[a-zA-Z\\-]+\\n\\+[^\\n]*\\n[^\\n]+"},
-	{"type":"regex", "name":"GENBANK", "regex":"LOCUS.+\\nDEFINITION.+\\n"},
-	{"type":"bytes", "name":"TEST", "bytes":["", "", ""]}
+	{"name":"FASTA", "regexen":["^(#[^\\n]+\\n)?>(gi)?[^\\n]+\\n[a-zA-Z\\-]+"]},
+	{"name":"FASTQ", "regexen":["\\n?@[^\\n]+\\n[a-zA-Z\\-]+\\n\\+[^\\n]*\\n[^\\n]+"]},
+	{"name":"GENBANK", "regexen":["LOCUS.+\\nDEFINITION.+\\n"]},
+	{"name":"BAM", "bytes":["\\x1f\\x8b\\x08\\x04\\x00\\x00\\x00\\x00\\x00\\xff\\x06\\x00\\x42\\x43\\x02\\x00"]},
+	{"name":"SeqXML", "regexen":["<seqxml[^<]+<entry"]}
 ]}
