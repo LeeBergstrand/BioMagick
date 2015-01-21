@@ -7,7 +7,6 @@ import re
 import json
 import mmap
 
-
 class BioID:
 	defs = None
 
@@ -22,7 +21,7 @@ class BioID:
 		for file in files:
 			with open(file, "r") as infile:
 				buff = infile.read()
-				mem_map = mmap.mmap(infile.fileno(), 0, prot=mmap.PROT_READ)
+				mem_map = mmap.mmap(infile.fileno(), 0, mmap.MAP_PRIVATE, mmap.PROT_READ)
 
 			if len(buff) == 0:
 				recog[file] = "empty"  # Empty files have no format :)
