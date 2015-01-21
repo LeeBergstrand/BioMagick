@@ -19,7 +19,7 @@ parser.add_argument("inputs", metavar="InputFiles", nargs="+",
 args = parser.parse_args()
 
 if len(sys.argv) < 2:
-	exit(1)
+	sys.exit(1)
 
 if args.FormatsPath is None:
 	# Default format definition file: formats.json
@@ -27,7 +27,7 @@ if args.FormatsPath is None:
 
 if not os.path.exists(args.FormatsPath):
 	print "Error: Failed to find format definition file " + args.FormatsPath
-	exit(1)
+	sys.exit(1)
 
 # <shiny> Replace wildcard ("*") with list of local files </shiny>
 if "*" in args.inputs:
@@ -44,4 +44,4 @@ try:
 		print fmt + ": " + formats[fmt]
 except Exception, ex:
 	print "Error: " + str(ex)
-	exit(1)
+	sys.exit(1)
