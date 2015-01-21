@@ -10,20 +10,20 @@ import mmap
 
 class BioID:
 	def __init__(self, path):
-		with open(path, "rU") as definitionfile:
-			contents = definitionfile.read()
-		self.definitions = json.loads(contents)["formats"]
+		with open(path, "rU") as definition_file:
+			contents = definition_file.read()
+			self.definitions = json.loads(contents)["formats"]
 
 	def identify(self, files):
 		identified = {}
 		matched = False
-		for filepath in files:
-			with open(filepath, "rU") as inputfile:
-				infile = inputfile.read()
-				mappedfile = mmap.mmap(inputfile.fileno(), 0, mmap.MAP_PRIVATE, mmap.PROT_READ)
+		for filePath in files:
+			with open(filePath, "rU") as input_file:
+				infile = input_file.read()
+				mapped_file = mmap.mmap(input_file.fileno(), 0, mmap.MAP_PRIVATE, mmap.PROT_READ)
 
 			if len(infile) == 0:
-				identified[filepath] = "empty"  # Empty files have no format :)
+				identified[filePath] = "empty"  # Empty files have no format :)
 				continue
 
 			for definition in self.definitions:
@@ -34,17 +34,17 @@ class BioID:
 							matched = False
 							break
 			if "bytes" in definition:
-				for bytefield in definition["bytes"]:
-					if mappedfile.find(bytefield.decode("string_escape")) == -1:
+				for byte_field in definition["bytes"]:
+					if mapped_file.find(byte_field.decode("string_escape")) == -1:
 						matched = False
 						break
 			if matched:
-				identified[filepath] = definition["name"]
+				identified[filePath] = definition["name"]
 				break
 
-			mappedfile.close()
+			mapped_file.close()
 
 			if file not in identified:
-				identified[filepath] = "unrecognized"
+				identified[filePath] = "unrecognized"
 
 		return identified
