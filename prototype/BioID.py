@@ -29,7 +29,7 @@ class BioID:
 				matched = True
 				if "regexen" in fdef:
 					for regex in fdef["regexen"]:
-						if re.findall(regex.replace("\\n", "\n"), buff, re.IGNORECASE) is []:
+						if re.findall(regex.replace("\\n", "\n"), buff, re.IGNORECASE) == []:
 							matched = False
 							break
 				if "bytes" in fdef:
