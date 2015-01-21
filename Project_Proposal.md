@@ -9,7 +9,7 @@ BioMagick
 
 ![Cost of sequencing in the past decade.](http://upload.wikimedia.org/wikipedia/commons/thumb/b/b7/DNA_Sequencing_Cost_per_Genome_Over_Time.jpg/380px-DNA_Sequencing_Cost_per_Genome_Over_Time.jpg)
 
-With the democratization of [next generation sequencing (NGS)](http://en.wikipedia.org/wiki/DNA_sequencing#Next-generation_methods) technologies over the past decade the cost of sequencing an organism's genome is dropping drastically and therefore sequencing is an ever increasingly attractive analytical method for biologist everywhere. The amount of sequencing data being generated is also increasing due to NGS technologies outputting tens of gigabytes of data per run. To counter act this new torrent of data computational biologists and bioinformaticians have begun to develop bioinformatic pipelines.
+With the democratization of [next generation sequencing (NGS)](http://en.wikipedia.org/wiki/DNA_sequencing#Next-generation_methods) technologies over the past decade the cost of sequencing an organism's genome is dropping drastically and therefore sequencing is an ever increasingly attractive analytical method for biologists everywhere. The amount of sequencing data being generated is also increasing due to NGS technologies outputting tens of gigabytes of data per run. To counter act this new torrent of data computational biologists and bioinformaticians have begun to develop bioinformatic pipelines.
 
 ### Bioinformatics Pipelines
 
