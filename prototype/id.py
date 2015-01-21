@@ -4,7 +4,9 @@
 # By Lee & Matt
 #
 
-import sys, os, argparse
+import sys
+import os
+import argparse
 from BioID import BioID
 
 parser = argparse.ArgumentParser(description="Prototype Biological File Format Identifier")
@@ -15,7 +17,7 @@ args = parser.parse_args()
 if len(sys.argv) < 2:
 	exit(1)
 
-if args.FormatsPath == None:
+if args.FormatsPath is None:
 	# Default format definition file: formats.json
 	args.FormatsPath = "formats.json"
 
