@@ -22,7 +22,7 @@ if args.FormatsPath is None:
 	args.FormatsPath = "formats.json"
 
 if not os.path.exists(args.FormatsPath):
-	print "Error: Failed to find format defintion file " + args.FormatsPath
+	print "Error: Failed to find format definition file " + args.FormatsPath
 	exit(1)
 
 # <shiny> Replace wildcard ("*") with list of local files </shiny>
@@ -30,7 +30,7 @@ if "*" in args.inputs:
 	args.inputs.remove("*")
 	for (dirPaths, dirNames, fileNames) in os.walk("."):
 		for fileName in fileNames:
-			if not fileName in args.inputs: # Avoid dupes
+			if fileName not in args.inputs: # Avoid dupes
 				args.inputs.append(fileName)
 
 try:
