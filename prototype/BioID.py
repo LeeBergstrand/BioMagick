@@ -12,7 +12,7 @@ class BioID:
     definitions = None
 
     def __init__(self, path):
-        with open(path, "r") as definitionfile:
+        with open(path, "rU") as definitionfile:
             contents = definitionfile.read()
         self.definitions = json.loads(contents)["formats"]
 
