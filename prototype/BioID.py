@@ -8,15 +8,13 @@ import json
 import mmap
 
 
-
 class BioID:
 	defs = None
 
-	@classmethod
-	def __init__(cls, defpath):
+	def __init__(self, defpath):
 		with open(defpath, "r") as deffile:
 			conts = deffile.read()
-		cls.defs = json.loads(conts)["formats"]
+		self.defs = json.loads(conts)["formats"]
 
 	@classmethod
 	def identify(cls, files):
