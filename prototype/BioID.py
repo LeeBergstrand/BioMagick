@@ -9,44 +9,44 @@ import mmap
 
 
 class BioID:
-    definitions = None
+	definitions = None
 
-    def __init__(self, path):
-        with open(path, "rU") as definitionfile:
-            contents = definitionfile.read()
-        self.definitions = json.loads(contents)["formats"]
+	def __init__(self, path):
+		with open(path, "rU") as definitionfile:
+			contents = definitionfile.read()
+		self.definitions = json.loads(contents)["formats"]
 
-    @classmethod
-    def identify(cls, files):
-        identified = {}
-        for filepath in files:
-            with open(filepath, "rU") as inputfile:
-                filecontents = inputfile.read()
-                mappedfile = mmap.mmap(inputfile.fileno(), 0, mmap.MAP_PRIVATE, mmap.PROT_READ)
+	@classmethod
+	def identify(cls, files):
+		identified = {}
+		for filepath in files:
+			with open(filepath, "rU") as inputfile:
+				filecontents = inputfile.read()
+				mappedfile = mmap.mmap(inputfile.fileno(), 0, mmap.MAP_PRIVATE, mmap.PROT_READ)
 
-            if len(filecontents) == 0:
-                identified[filepath] = "empty"  # Empty files have no format :)
-                continue
+			if len(filecontents) == 0:
+				identified[filepath] = "empty"  # Empty files have no format :)
+				continue
 
-            for definition in cls.definitions:
-                matched = True
-                if "regexen" in definition:
-                    for regex in definition["regexen"]:
-                        if not re.findall(regex.replace("\\n", "\n"), filecontents, re.IGNORECASE):
-                            matched = False
-                            break
-            if "bytes" in definition:
-                for bytefield in definition["bytes"]:
-                    if mappedfile.find(bytefield.decode("string_escape")) == -1:
-                        matched = False
-                        break
-            if matched:
-                identified[filepath] = definition["name"]
-                break
+			for definition in cls.definitions:
+				matched = True
+				if "regexen" in definition:
+					for regex in definition["regexen"]:
+						if not re.findall(regex.replace("\\n", "\n"), filecontents, re.IGNORECASE):
+							matched = False
+							break
+			if "bytes" in definition:
+				for bytefield in definition["bytes"]:
+					if mappedfile.find(bytefield.decode("string_escape")) == -1:
+						matched = False
+						break
+			if matched:
+				identified[filepath] = definition["name"]
+				break
 
-            mappedfile.close()
+			mappedfile.close()
 
-            if file not in identified:
-                identified[filepath] = "unrecognized"
+			if file not in identified:
+				identified[filepath] = "unrecognized"
 
-        return identified
+		return identified
