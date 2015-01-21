@@ -1,6 +1,6 @@
 #!/usr/bin/env python
 #
-# A class for auto identifying bioinformatics file formats.
+# A class for auto identifying BioInformatics file formats.
 # By Lee & Matt
 
 import re
@@ -9,43 +9,44 @@ import mmap
 
 
 class BioID:
-	defs = None
+    definitions = None
 
-	def __init__(self, defpath):
-		with open(defpath, "r") as deffile:
-			conts = deffile.read()
-		self.defs = json.loads(conts)["formats"]
+    def __init__(self, path):
+        with open(path, "r") as definitionfile:
+            contents = definitionfile.read()
+        self.definitions = json.loads(contents)["formats"]
 
-	@classmethod
-	def identify(cls, files):
-		recog = {}
-		for file in files:
-			with open(file, "r") as infile:
-				buff = infile.read()
-				mem_map = mmap.mmap(infile.fileno(), 0, mmap.MAP_PRIVATE, mmap.PROT_READ)
+    @classmethod
+    def identify(cls, files):
+        identified = {}
+        for filepath in files:
+            with open(filepath, "r") as inputfile:
+                filecontents = inputfile.read()
+                mappedfile = mmap.mmap(inputfile.fileno(), 0, mmap.MAP_PRIVATE, mmap.PROT_READ)
 
-			if len(buff) == 0:
-				recog[file] = "empty"  # Empty files have no format :)
-				continue
+            if len(filecontents) == 0:
+                identified[filepath] = "empty"  # Empty files have no format :)
+                continue
 
-			for fdef in cls.defs:
-				matched = True
-				if "regexen" in fdef:
-					for regex in fdef["regexen"]:
-						if not re.findall(regex.replace("\\n", "\n"), buff, re.IGNORECASE):
-							matched = False
-							break
-			if "bytes" in fdef:
-				for bytes in fdef["bytes"]:
-					if mem_map.find(bytes.decode("string_escape")) == -1:
-						matched = False
-						break
-			if matched:
-				recog[file] = fdef["name"]
-				break
+            for definition in cls.definitions:
+                matched = True
+                if "regexen" in definition:
+                    for regex in definition["regexen"]:
+                        if not re.findall(regex.replace("\\n", "\n"), filecontents, re.IGNORECASE):
+                            matched = False
+                            break
+            if "bytes" in definition:
+                for bytefield in definition["bytes"]:
+                    if mappedfile.find(bytefield.decode("string_escape")) == -1:
+                        matched = False
+                        break
+            if matched:
+                identified[filepath] = definition["name"]
+                break
 
-		mem_map.close()
-		if file not in recog:
-			recog[file] = "unrecognized"
+            mappedfile.close()
 
-		return recog
+            if file not in identified:
+                identified[filepath] = "unrecognized"
+
+        return identified
