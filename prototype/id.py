@@ -39,36 +39,3 @@ try:
 except Exception, ex:
 	print "Error: " + str(ex)
 	exit(1)
-
-# Load & parse definitions
-#with open(args.FormatsPath, "r") as hDef:
-#	conts = hDef.read()
-#formats = json.loads(conts)["formats"]
-
-# Process input files
-#recog = []
-#for filePath in args.inputs:
-#	with open(filePath, "r") as inFile:
-#		buff = inFile.read() # << Is it worth checking filesize and breaking up the reads if over a threshold? >>
-#
-#	for format in formats:
-#		matched = True
-#		if format["type"] == "regex":
-#			for regex in format["regexen"]:
-#				if re.findall(regex.replace("\\n", "\n"), buff) == []:
-#					matched = False
-#					break
-#		elif format["type"] == "bytes":
-#			for bytes in format["bytes"]:
-#				if not bytes in buff:
-#					matched = False
-#					break
-#
-#		if matched:
-#			print filePath + ": " + format["name"]
-#			recog.append(filePath)
-#			break
-#
-#	# Notify if unrecognized
-#	if not filePath in recog:
-#		print filePath + ": Unrecognized"
