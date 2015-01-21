@@ -20,7 +20,7 @@ class BioID:
     def identify(cls, files):
         identified = {}
         for filepath in files:
-            with open(filepath, "r") as inputfile:
+            with open(filepath, "rU") as inputfile:
                 filecontents = inputfile.read()
                 mappedfile = mmap.mmap(inputfile.fileno(), 0, mmap.MAP_PRIVATE, mmap.PROT_READ)
 
