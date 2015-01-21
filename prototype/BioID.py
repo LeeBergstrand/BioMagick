@@ -7,44 +7,45 @@ import re
 import json
 import mmap
 
+
 class BioID:
-	defs = None
+    defs = None
 
-	def __init__(self, defpath):
-		with open(defpath, "r") as deffile:
-			conts = deffile.read()
-		self.defs = json.loads(conts)["formats"]
+    def __init__(self, defpath):
+        with open(defpath, "r") as deffile:
+            conts = deffile.read()
+        self.defs = json.loads(conts)["formats"]
 
-	@classmethod
-	def identify(cls, files):
-		recog = {}
-		for file in files:
-			with open(file, "r") as infile:
-				buff = infile.read()
-				mem_map = mmap.mmap(infile.fileno(), 0, mmap.MAP_PRIVATE, mmap.PROT_READ)
+    @classmethod
+    def identify(cls, files):
+        recog = {}
+        for file in files:
+            with open(file, "r") as infile:
+                buff = infile.read()
+                mem_map = mmap.mmap(infile.fileno(), 0, mmap.MAP_PRIVATE, mmap.PROT_READ)
 
-			if len(buff) == 0:
-				recog[file] = "empty"  # Empty files have no format :)
-				continue
+            if len(buff) == 0:
+                recog[file] = "empty"  # Empty files have no format :)
+                continue
 
-			for fdef in cls.defs:
-				matched = True
-				if "regexen" in fdef:
-					for regex in fdef["regexen"]:
-						if re.findall(regex.replace("\\n", "\n"), buff, re.IGNORECASE) == []:
-							matched = False
-							break
-				if "bytes" in fdef:
-					for bytes in fdef["bytes"]:
-						if mem_map.find(bytes.decode("string_escape")) == -1:
-							matched = False
-							break
-				if matched:
-					recog[file] = fdef["name"]
-					break
+            for fdef in cls.defs:
+                matched = True
+                if "regexen" in fdef:
+                    for regex in fdef["regexen"]:
+                        if re.findall(regex.replace("\\n", "\n"), buff, re.IGNORECASE) == []:
+                            matched = False
+                            break
+                if "bytes" in fdef:
+                    for bytes in fdef["bytes"]:
+                        if mem_map.find(bytes.decode("string_escape")) == -1:
+                            matched = False
+                            break
+                if matched:
+                    recog[file] = fdef["name"]
+                    break
 
-			mem_map.close()
-			if file not in recog:
-				recog[file] = "unrecognized"
+            mem_map.close()
+            if file not in recog:
+                recog[file] = "unrecognized"
 
-		return recog
+        return recog
