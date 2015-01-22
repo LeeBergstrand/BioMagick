@@ -25,24 +25,34 @@ class BioID:
 					mapped_file = mmap.mmap(input_file.fileno(), 0, mmap.MAP_PRIVATE, mmap.PROT_READ)
 
 			for definition in self.definitions:
-				matched = True
+				definition_match = False
 				if "regexen" in definition.keys():
+					pattern_match = True
 					for regex in definition["regexen"]:
 						if not re.findall(regex.replace("\\n", "\n"), mapped_file, re.IGNORECASE):
-							matched = False
+							pattern_match = False
 							break
-				if "bytes" in definition.keys():
+					if pattern_match:
+						definition_match = True
+					else:
+						definition_match = False
+				if not definition_match and "bytes" in definition.keys():
+					pattern_match = True
 					for byte_field in definition["bytes"]:
 						if mapped_file.find(byte_field.decode("string_escape")) == -1:
-							matched = False
+							pattern_match = False
 							break
-				if matched:
+					if pattern_match:
+						definition_match = True
+					else:
+						definition_match = False
+				if definition_match:
 					identified[filePath] = definition["name"]
 					break
 
 			mapped_file.close()
 
-			if file not in identified:
+			if filePath not in identified:
 				identified[filePath] = "unrecognized"
 
 		return identified
