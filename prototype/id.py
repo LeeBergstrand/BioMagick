@@ -4,7 +4,8 @@
 # By Lee & Matt
 #
 
-import sys, os, argparse, re, json
+import sys, os, argparse
+from BioID import BioID
 
 parser = argparse.ArgumentParser(description="Prototype Biological File Format Identifier")
 parser.add_argument("-f", action="store", dest="FormatsPath", help="The path to the format definition file, defaults to formats.json")
@@ -19,46 +20,55 @@ if args.FormatsPath == None:
 	args.FormatsPath = "formats.json"
 
 if not os.path.exists(args.FormatsPath):
-	print "Error: Failed to find " + args.FormatsPath
+	print "Error: Failed to find format defintion file " + args.FormatsPath
 	exit(1)
 
-# <Shiny> Replace wildcard ("*") with list of local files
+# <shiny> Replace wildcard ("*") with list of local files </shiny>
 if "*" in args.inputs:
 	args.inputs.remove("*")
 	for (dirPaths, dirNames, fileNames) in os.walk("."):
 		for fileName in fileNames:
-			if not fileName in args.inputs:
+			if not fileName in args.inputs: # Avoid dupes
 				args.inputs.append(fileName)
 
+try:
+	bid = BioID(args.FormatsPath)
+	formats = bid.identify(args.inputs)
+	for fmt in formats:
+		print fmt + ": " + formats[fmt]
+except Exception, ex:
+	print "Error: " + str(ex)
+	exit(1)
+
 # Load & parse definitions
-with open(args.FormatsPath, "r") as hDef:
-	conts = hDef.read()
-formats = json.loads(conts)["formats"]
+#with open(args.FormatsPath, "r") as hDef:
+#	conts = hDef.read()
+#formats = json.loads(conts)["formats"]
 
 # Process input files
-recog = []
-for filePath in args.inputs:
-	with open(filePath, "r") as inFile:
-		buff = inFile.read() # << Is it worth checking filesize and breaking up the reads if over a threshold? >>
-
-	for format in formats:
-		if format["type"] == "regex":
-			if re.findall(format["regex"].replace("\\n", "\n"), buff) != []:
-				print filePath + ": " + format["name"]
-				recog.append(filePath)
-				break
-		elif format["type"] == "bytes":
-			matched = True
-			for bytes in format["bytes"]:
-				if not bytes in buff:
-					matched = False
-					break
-
-			# Move on if any byte field doesn't match
-			# << Idea: Add "requirement" attribute ("required" or "optional") to byte fields >>
-			if not matched:
-				break
-
-	# Notify if unrecognized
-	if not filePath in recog:
-		print filePath + ": Unrecognized"
+#recog = []
+#for filePath in args.inputs:
+#	with open(filePath, "r") as inFile:
+#		buff = inFile.read() # << Is it worth checking filesize and breaking up the reads if over a threshold? >>
+#
+#	for format in formats:
+#		matched = True
+#		if format["type"] == "regex":
+#			for regex in format["regexen"]:
+#				if re.findall(regex.replace("\\n", "\n"), buff) == []:
+#					matched = False
+#					break
+#		elif format["type"] == "bytes":
+#			for bytes in format["bytes"]:
+#				if not bytes in buff:
+#					matched = False
+#					break
+#
+#		if matched:
+#			print filePath + ": " + format["name"]
+#			recog.append(filePath)
+#			break
+#
+#	# Notify if unrecognized
+#	if not filePath in recog:
+#		print filePath + ": Unrecognized"
