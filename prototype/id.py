@@ -13,9 +13,9 @@ from BioID import BioID
 
 parser = argparse.ArgumentParser(description="Prototype Biological File Format Identifier")
 parser.add_argument("-f", action="store", dest="FormatsPath",
-					help="The path to the format definition file, defaults to formats.json")
+                    help="The path to the format definition file, defaults to formats.json")
 parser.add_argument("inputs", metavar="InputFiles", nargs="+",
-					help="The input files whose formats are to be identified")
+                    help="The input files whose formats are to be identified")
 args = parser.parse_args()
 
 if len(sys.argv) < 2:
