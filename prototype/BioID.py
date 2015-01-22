@@ -1,41 +1,48 @@
-import os, re, json, mmap
+#!/usr/bin/env python
+#
+# A class for auto identifying BioInformatics file formats.
+# By Lee & Matt
+
+import sys
+import re
+import json
+import mmap
+
 
 class BioID:
-	def __init__(self, defpath):
-		with open(defpath, "r") as deffile:
-			conts = deffile.read()
-		self.defs = json.loads(conts)["formats"]
+	def __init__(self, path):
+		with open(path, "rU") as definition_file:
+			contents = definition_file.read()
+		self.definitions = json.loads(contents)["formats"]
 
 	def identify(self, files):
-		recog = {}
-		for file in files:
-			with open(file, "r") as infile:
-				buff = infile.read()
-				map = mmap.mmap(infile.fileno(), 0, prot=mmap.PROT_READ)
+		identified = {}
+		for filePath in files:
+			with open(filePath, "rU") as input_file:
+				if sys.platform == "win32":
+					mapped_file = mmap.mmap(input_file.fileno(), 0, None, mmap.ACCESS_READ)
+				else:
+					mapped_file = mmap.mmap(input_file.fileno(), 0, mmap.MAP_PRIVATE, mmap.PROT_READ)
 
-			if len(buff) == 0:
-				recog[file] = "empty" # Empty files have no format :)
-				continue
-
-			for fdef in self.defs:
+			for definition in self.definitions:
 				matched = True
-				if "regexen" in fdef:
-					for regex in fdef["regexen"]:
-						if re.findall(regex.replace("\\n", "\n"), buff, re.IGNORECASE) == []:
+				if "regexen" in definition.keys():
+					for regex in definition["regexen"]:
+						if not re.findall(regex.replace("\\n", "\n"), mapped_file, re.IGNORECASE):
 							matched = False
 							break
-				if "bytes" in fdef:
-					for bytes in fdef["bytes"]:
-						if map.find(bytes.decode("string_escape")) == -1:
+				if "bytes" in definition.keys():
+					for byte_field in definition["bytes"]:
+						if mapped_file.find(byte_field.decode("string_escape")) == -1:
 							matched = False
 							break
-
 				if matched:
-					recog[file] = fdef["name"]
+					identified[filePath] = definition["name"]
 					break
 
-			map.close()
-			if not file in recog:
-				recog[file] = "unrecognized"
+			mapped_file.close()
 
-		return recog
+			if file not in identified:
+				identified[filePath] = "unrecognized"
+
+		return identified
