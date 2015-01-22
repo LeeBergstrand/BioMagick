@@ -44,4 +44,8 @@ try:
 		print fmt + ": " + formats[fmt]
 except Exception, ex:
 	print "Error: " + str(ex)
+<<<<<<< HEAD
+	exit(1)
+=======
 	sys.exit(1)
+>>>>>>> feature/Prototype_Test_Class

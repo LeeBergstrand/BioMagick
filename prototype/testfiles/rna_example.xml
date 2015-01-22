@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<seqXML source="Ensembl" sourceVersion="56" seqXMLversion="0.3" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="http://www.seqxml.org/0.3/seqxml.xsd">
+<seqXML source="Ensembl" sourceVersion="56" seqXMLversion="0.3" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+        xsi:noNamespaceSchemaLocation="http://www.seqxml.org/0.3/seqxml.xsd">
     <entry id="gga-let-7a-1">
         <species name="Gallus gallus" ncbiTaxID="9031"/>
         <description>Gallus gallus let-7a-1 stem-loop</description>
@@ -19,7 +20,7 @@
         <RNAseq>U</RNAseq>
     </entry>
     <entry id="empty description">
-    	<description></description>
+        <description></description>
         <RNAseq>UGUGGGAUGAGGUAGUAGGUUGUAUAGUUUUAGGGUCAUACCCGCAAC</RNAseq>
     </entry>
 </seqXML>
