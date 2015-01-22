@@ -2,7 +2,10 @@
   "formats": [
     {
       "name": "FASTA",
-      "regexen": ["^(#[^\\n]+\\n)?>(gi)?[^\\n]+\\n[a-zA-Z\\-]+"]
+      "regexen": [
+        ">(gi)?.+",
+        "\\n[ABCDEFGHIKLMNPQRSTUVWXYZ\\-\\.]+"
+      ]
     },
     {
       "name": "FASTQ",
@@ -10,7 +13,10 @@
     },
     {
       "name": "GENBANK",
-      "regexen": ["LOCUS.+\\nDEFINITION.+\\n"]
+      "regexen": [
+        "LOCUS.+",
+        "DEFINITION.+"
+      ]
     },
     {
       "name": "BAM",
