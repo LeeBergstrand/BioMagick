@@ -33,14 +33,14 @@ class BioID:
 						if not re.findall(regex.replace("\\n", "\n"), infile, re.IGNORECASE):
 							matched = False
 							break
-			if "bytes" in definition:
-				for byte_field in definition["bytes"]:
-					if mapped_file.find(byte_field.decode("string_escape")) == -1:
-						matched = False
-						break
-			if matched:
-				identified[filePath] = definition["name"]
-				break
+				if "bytes" in definition:
+					for byte_field in definition["bytes"]:
+						if mapped_file.find(byte_field.decode("string_escape")) == -1:
+							matched = False
+							break
+				if matched:
+					identified[filePath] = definition["name"]
+					break
 
 			mapped_file.close()
 
