@@ -26,7 +26,7 @@ if args.FormatsPath is None:
 	args.FormatsPath = "formats.json"
 
 if not os.path.exists(args.FormatsPath):
-	print "Error: Failed to find format definition file " + args.FormatsPath
+	print("Error: Failed to find format definition file " + args.FormatsPath)
 	sys.exit(1)
 
 # <shiny> Replace wildcard ("*") with list of local files </shiny>
@@ -41,7 +41,7 @@ try:
 	bid = BioID(args.FormatsPath)
 	formats = bid.identify(args.inputs)
 	for fmt in formats:
-		print fmt + ": " + formats[fmt]
-except Exception, ex:
-	print "Error: " + str(ex)
+		print(fmt + ": " + formats[fmt])
+except Exception as ex:
+	print("Error: " + str(ex))
 	sys.exit(1)
