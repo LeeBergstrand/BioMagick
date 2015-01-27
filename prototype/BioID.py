@@ -7,6 +7,7 @@ import sys
 import re
 import json
 import mmap
+import codecs
 from binaryornot.check import is_binary
 
 
@@ -22,63 +23,77 @@ class BioFormat(object):
 # BioFormat: Defines the properties of a bioinformatic file identification object:
 class BioID(object):
 	def __init__(self, path):
+		self.binary_definitions = []
+		self.text_definitions = []
+
 		with open(path, "rU") as definition_file:
 			contents = definition_file.read()
-		self.definitions = json.loads(contents)["formats"]
+
+		# Load JSON format definitions and parse into binary and text lists
+		for definition in json.loads(contents)["formats"]:
+			if definition["type"] == "BIN":
+				self.binary_definitions.append(
+					BioFormat(definition["name"], definition["type"], definition["compression"], definition["markers"]))
+			elif definition["type"] == "TEXT":
+				self.text_definitions.append(
+					BioFormat(definition["name"], definition["type"], definition["compression"], definition["markers"]))
+
+	# Method used to search binary files for raw byte sequences
+	def identifybinary(self, file_path):
+		binary_input_file = open(file_path, "rb")  # Read in binary file as binary ("rb")
+
+		if sys.platform == "win32":  # Check if os is windows
+			mapped_file = mmap.mmap(binary_input_file.fileno(), 0, None, mmap.ACCESS_READ)
+		else:
+			mapped_file = mmap.mmap(binary_input_file.fileno(), 0, mmap.MAP_PRIVATE, mmap.PROT_READ)
+
+		for binary_file_type in self.binary_definitions:
+			pattern_match = False
+			for field in binary_file_type.markers:
+				# Check for byte field in binary file
+				if mapped_file.find(codecs.decode(field, "unicode_escape").encode("latin1")) != -1:
+					pattern_match = True
+				else:
+					pattern_match = False
+					break  # All byte fields must be present in order for the file type check to pass
+			if pattern_match:
+				return binary_file_type.name
+
+		return "unrecognized"
+
+	# Method used to match regular expressions against "text" files
+	def identifytext(self, file_path):
+		text_input_file = open(file_path, "rU")  # Read in text file as text with universal newlines ("rU")
+		input_text = text_input_file.read()
+
+		for text_file_type in self.text_definitions:
+			pattern_match = False
+			for regex in text_file_type.markers:
+				# Replace escaped newlines in regular expressions with actual newline characters
+				if re.findall(regex.replace("\\n", "\n"), input_text, re.IGNORECASE):
+					pattern_match = True
+				else:
+					pattern_match = False
+					break
+			if pattern_match:
+				return text_file_type.name
+
+		return "unrecognized"
 
 	# Method one used for identifying the file type of a list for files:
 	def identify(self, files):
-		format_list = []
 		identified = {}
 
-		for format_type in self.definitions:
-			format_list.append(
-				BioFormat(format_type["name"], format_type["type"], format_type["compression"], format_type["markers"]))
-
-		binary_list = [file_format for file_format in format_list if file_format.file_type == "BIN"]
-		text_list = [file_format for file_format in format_list if file_format.file_type == "TEXT"]
-		del format_list  # Delete full file list from memory
+		# [[ Preserving this (for now) for the usage of list comprehensions and the del keyword ]] #
+		# binary_list = [file_format for file_format in format_list if file_format.file_type == "BIN"]
+		# text_list = [file_format for file_format in format_list if file_format.file_type == "TEXT"]
+		# del format_list  # Delete full file list from memory
 
 		# Check if each each file is binary or text and use the appropriate marker (regex or byte field).
-		for filePath in files:
-			file_type = ""
-			pattern_match = bool
-			if is_binary(filePath):
-				binary_input_file = open(filePath, "rb")  # Read in binary file as binary ("rb")
-				if sys.platform == "win32":  # Check if os is windows
-					mapped_file = mmap.mmap(binary_input_file.fileno(), 0, None, mmap.ACCESS_READ)
-				else:
-					mapped_file = mmap.mmap(binary_input_file.fileno(), 0, mmap.MAP_PRIVATE, mmap.PROT_READ)
-
-				for binary_file_type in binary_list:
-					byte_fields = binary_file_type.markers
-					for field in byte_fields:
-						if mapped_file.find(field.decode("string_escape")) != -1:  # Check for byte field in binary file
-							pattern_match = True
-						else:
-							pattern_match = False
-							break  # All byte fields must be present in order for the file type check to pass
-					if pattern_match:
-						file_type = binary_file_type.name
-						break
+		for file_path in files:
+			if is_binary(file_path):
+				identified[file_path] = self.identifybinary(file_path)
 			else:
-				text_input_file = open(filePath, "rU")  # Read in text file as text with universal newlines ("rU")
-				input_text = text_input_file.read()
-				for text_file_type in text_list:
-					regexps = text_input_file.markers
-					for regex in regexps:
-						if re.findall(regex.replace("\\n", "\n"), input_text, re.IGNORECASE):
-							pattern_match = True
-						else:
-							pattern_match = False
-							break
-					if pattern_match:
-						file_type = text_file_type.name
-						break  # All Regexps must be present in order for the file type check to pass.
-			if not pattern_match:
-				file_type = "unrecognized"
-
-			if filePath not in identified:
-				identified[filePath] = file_type
+				identified[file_path] = self.identifytext(file_path)
 
 		return identified
