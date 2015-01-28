@@ -14,12 +14,12 @@ from BioID import BioID
 
 class FileIdTest(unittest.TestCase):
 	def test_fasta(self):
-		id_results = BioID('./formats.json').identify(['./testing/testfiles/NC_000932.faa'])
+		id_results = BioID('./formats.json').identify(['./testing/TestFiles/NC_000932.faa'])
 		test_file, first_file_type = id_results.popitem()
 		self.assertEquals(first_file_type, 'FASTA')
 
 	def test_genbank(self):
-		id_results = BioID('./formats.json').identify(['./testing/testfiles/NC_000932.gb'])
+		id_results = BioID('./formats.json').identify(['./testing/TestFiles/NC_000932.gb'])
 		test_file, first_file_type = id_results.popitem()
 		self.assertEquals(first_file_type, 'GENBANK')
 
