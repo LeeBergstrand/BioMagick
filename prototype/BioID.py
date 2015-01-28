@@ -39,7 +39,7 @@ class BioID(object):
 					BioFormat(definition["name"], definition["type"], definition["compression"], definition["markers"]))
 
 	# Method used to search binary files for raw byte sequences
-	def identifybinary(self, file_path):
+	def identify_binary(self, file_path):
 		binary_input_file = open(file_path, "rb")  # Read in binary file as binary ("rb")
 
 		if sys.platform == "win32":  # Check if os is windows
@@ -62,7 +62,7 @@ class BioID(object):
 		return "unrecognized"
 
 	# Method used to match regular expressions against "text" files
-	def identifytext(self, file_path):
+	def identify_text(self, file_path):
 		text_input_file = open(file_path, "rU")  # Read in text file as text with universal newlines ("rU")
 		input_text = text_input_file.read()
 
@@ -92,8 +92,8 @@ class BioID(object):
 		# Check if each each file is binary or text and use the appropriate marker (regex or byte field).
 		for file_path in files:
 			if is_binary(file_path):
-				identified[file_path] = self.identifybinary(file_path)
+				identified[file_path] = self.identify_binary(file_path)
 			else:
-				identified[file_path] = self.identifytext(file_path)
+				identified[file_path] = self.identify_text(file_path)
 
 		return identified
