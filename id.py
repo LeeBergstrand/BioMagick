@@ -30,12 +30,14 @@ if not os.path.exists(args.FormatsPath):
 	sys.exit(1)
 
 # <shiny> Replace wildcard ("*") with list of local files </shiny>
-if "*" in args.inputs:
-	args.inputs.remove("*")
-	for (dirPaths, dirNames, fileNames) in os.walk("."):
-		for fileName in fileNames:
-			if fileName not in args.inputs:  # Avoid dupes
-				args.inputs.append(fileName)
+for input_path in args.inputs:
+	if input_path.endswith("*"):
+		args.inputs.remove(input_path)
+		for (directory_paths, directory_names, file_names) in os.walk(input_path.rstrip("/*")):
+			for file_name in file_names:
+				file_path = input_path.rstrip("*") + file_name
+				if file_path not in args.inputs:  # Avoid dupes
+					args.inputs.append(file_path)
 
 try:
 	bid = BioID(args.FormatsPath)
