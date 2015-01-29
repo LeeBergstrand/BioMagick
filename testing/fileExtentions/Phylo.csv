@@ -1,0 +1,6 @@
+Format name,File Extension,Our Notes
+newick,"*.nwk, *.tre",
+nexus,"*.nxs, *.nex ",
+nexml,*.xml,
+phyloxml,*.xml,
+cdao,*. cdao,
