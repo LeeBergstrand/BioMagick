@@ -7,21 +7,22 @@
 # ----------------------------------------------------------------------------------------------
 # ==============================================================================================
 
-# Imports & Setup:
-import unittest
 from BioID import BioID
 
 
-class FileIdTest(unittest.TestCase):
-	def test_fasta(self):
-		id_results = BioID('./formats.json').identify(['./testing/testFiles/NC_000932.faa'])
-		test_file, first_file_type = id_results.popitem()
-		self.assertEquals(first_file_type, 'FASTA')
+# Nose test generator to iterate format test files defined in CSVs
+class TestFormatDefinitions(object):
+	def test_formats(self):
+		with open("./testing/format_tests.csv", "rU") as formats_file:
+			test_files = formats_file.readlines()[1:]
 
-	def test_genbank(self):
-		id_results = BioID('./formats.json').identify(['./testing/testFiles/NC_000932.gb'])
-		test_file, first_file_type = id_results.popitem()
-		self.assertEquals(first_file_type, 'GENBANK')
+		for test_file in test_files:
+			filename, expected_format = test_file.rstrip(",\n").split(",")
+			yield self.check_format, filename, expected_format
 
-suite = unittest.TestLoader().loadTestsFromTestCase(FileIdTest)
-unittest.TextTestRunner(verbosity=2).run(suite)
+	@staticmethod
+	def check_format(test_file, expected_format):
+		# Putting the test file path here saves having to specify a path for each test file in the CSV
+		test_file_path = "./testing/testFiles/" + test_file
+		id_results = BioID("./formats.json").identify([test_file_path])
+		assert id_results[test_file_path] == expected_format
