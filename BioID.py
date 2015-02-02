@@ -57,8 +57,12 @@ class BioID(object):
 					pattern_match = False
 					break  # All byte fields must be present in order for the file type check to pass
 			if pattern_match:
+				mapped_file.close()
+				binary_input_file.close()
 				return binary_file_type.name
 
+		mapped_file.close()
+		binary_input_file.close()
 		return "unrecognized"
 
 	# Method used to match regular expressions against "text" files
@@ -76,18 +80,15 @@ class BioID(object):
 					pattern_match = False
 					break
 			if pattern_match:
+				text_input_file.close()
 				return text_file_type.name
 
+		text_input_file.close()
 		return "unrecognized"
 
 	# Method one used for identifying the file type of a list for files:
 	def identify(self, files):
 		identified = {}
-
-		# [[ Preserving this (for now) for the usage of list comprehensions and the del keyword ]] #
-		# binary_list = [file_format for file_format in format_list if file_format.file_type == "BIN"]
-		# text_list = [file_format for file_format in format_list if file_format.file_type == "TEXT"]
-		# del format_list  # Delete full file list from memory
 
 		# Check if each each file is binary or text and use the appropriate marker (regex or byte field).
 		for file_path in files:
