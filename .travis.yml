@@ -9,4 +9,5 @@ python:
 # command to install dependencies
 install: "pip install -r requirements.txt"
 # command to run tests
+echo "[Debug] Testing from: $(pwd)"
 script: "export PYTHONPATH=$PYTHONPATH:$(pwd) && nosetests -v"
