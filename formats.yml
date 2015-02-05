@@ -1,40 +1,40 @@
---- # Format Definitions
-  formats:
-  -
+---
+-
   name: FASTA
   type: TEXT
   compression: NONE
   markers:
-    - >(gi)?.+
-    - \\n[ABCDEFGHIKLMNPQRSTUVWXYZ\\-\\.]+
-  -
-    name: FASTQ
-    type": TEXT
-    compression: NONE
-    markers: ["\\n?@[^\\n]+\\n[a-zA-Z\\-]+\\n\\+[^\\n]*\\n[^\\n]+"]
-  -
-    name: GENBANK
-    type: TEXT
-    compression: NONE
-    markers:
-      - LOCUS.+
-      - DEFINITION.+
-  -
-    name: SEQXML
-    type: TEXT
-    compression: NONE
-    markers:
-      - <seqxml[^<]+<entry
-  -
-    name: BAM
-    type: BIN
-    compression: GZIP
-    markers:
-      \\x1f\\x8b\\x08\\x04\\x00\\x00\\x00\\x00\\x00\\xff\\x06\\x00\\x42\\x43\\x02\\x00
-  -
-    name: SFF
-	type: BIN
-	compression: NONE
-	markers:
-      - \\x2e\\x73\\x66\\x66\\x00\\x00\\x00\\x01
+    - ">(gi)?.+"
+    - "\\n[ABCDEFGHIKLMNPQRSTUVWXYZ\\-\\.]+"
+-
+  name: FASTQ
+  type: TEXT
+  compression: NONE
+  markers:
+    - "\\n?@[^\\n]+\\n[a-zA-Z\\-]+\\n\\+[^\\n]*\\n[^\\n]+"
+-
+  name: GENBANK
+  type: TEXT
+  compression: NONE
+  markers:
+    - "LOCUS.+"
+    - "DEFINITION.+"
+-
+  name: SEQXML
+  type: TEXT
+  compression: NONE
+  markers:
+    - "<seqxml[^<]+<entry"
+-
+  name: BAM
+  type: BIN
+  compression: GZIP
+  markers:
+    - "\\x1f\\x8b\\x08\\x04\\x00\\x00\\x00\\x00\\x00\\xff\\x06\\x00\\x42\\x43\\x02\\x00"
+-
+  name: SFF
+  type: BIN
+  compression: NONE
+  markers:
+    - "\\x2e\\x73\\x66\\x66\\x00\\x00\\x00\\x01"
 ...
