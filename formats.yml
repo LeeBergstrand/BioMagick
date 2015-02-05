@@ -31,6 +31,12 @@
   markers:
     - "(?s)<(\\w+:)?phyloxml[^<]+<(\\w+:)?phylogeny\\srooted=\"(true|false)\".+<(\\w+:)?clade.+</(\\w+:)?phylogeny>.+</(\\w+:)?phyloxml>"
 -
+  name: NEXML
+  type: TEXT
+  compression: NONE
+  markers:
+    - "(?s)<nex:nexml[^>]+>.+<otus[^>]+>(\\s+<otu.+)+</otus>.+</nex:nexml>"
+-
   name: BAM
   type: BIN
   compression: GZIP
