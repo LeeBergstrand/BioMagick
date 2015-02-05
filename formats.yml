@@ -25,6 +25,12 @@
   markers:
     - "<seqxml[^<]+<entry"
 -
+  name: PHYLOXML
+  type: TEXT
+  compression: NONE
+  markers:
+    - "(?s)<(\\w+:)?phyloxml[^<]+<(\\w+:)?phylogeny\\srooted=\"(true|false)\".+<(\\w+:)?clade.+</(\\w+:)?phylogeny>.+</(\\w+:)?phyloxml>"
+-
   name: BAM
   type: BIN
   compression: GZIP
