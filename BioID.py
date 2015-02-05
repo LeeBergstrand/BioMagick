@@ -5,7 +5,7 @@
 
 import sys
 import re
-import json
+import yaml
 import mmap
 import codecs
 from binaryornot.check import is_binary
@@ -30,7 +30,7 @@ class BioID(object):
 			contents = definition_file.read()
 
 		# Load JSON format definitions and parse into binary and text lists
-		for definition in json.loads(contents)["formats"]:
+		for definition in yaml.safe_load(contents):
 			if definition["type"] == "BIN":
 				self.binary_definitions.append(
 					BioFormat(definition["name"], definition["type"], definition["compression"], definition["markers"]))
