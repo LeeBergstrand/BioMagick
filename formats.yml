@@ -16,7 +16,7 @@
   type: TEXT
   compression: NONE
   markers:
-    # Sources:
+    # References:
     #   http://meme.nbcr.net/meme/doc/clustalw-format.html
     #   https://github.com/biopython/biopython/blob/4a53c2cd8135fa6819e8a560545aeb5f9f243123/Bio/AlignIO/ClustalIO.py
     - "^(clustal(\\s?w)?)\\s(\\([\\d\\.]+\\)|[\\d\\.]+).*\\n+" # Header
@@ -28,6 +28,16 @@
   markers:
     - "LOCUS.+"
     - "DEFINITION.+"
+-
+  name: EMBL
+  type: TEXT
+  compression: NONE
+  markers:
+    # References:
+    # http://www.genebee.msu.su/services/Kw-help.html#SP
+    - "^ID\\s+\\w+(;\\s+([\\w\\s]+(;\\s+|\\.))+)?\\n" # ID field
+    - "(xx|de\\s+[^\\n]+|os\\s+[^\\n]+|oc\\s+[^\\n]+|ft\\s+[^\\n]+)" # Secondary fields (these might not be needed!)
+    - "\\nsq\\s+([\\w\\s]+;)+(\\n\\s+[atcg\\s]+\\s+\\d+)+|\\nco\\s+[\\w\\.\\(\\):,]+," # Sequence
 -
   name: SEQXML
   type: TEXT

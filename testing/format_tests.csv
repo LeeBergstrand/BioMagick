@@ -16,6 +16,10 @@ opuntia.aln,CLUSTAL
 blank_seq.gb,GENBANK
 extra_keywords.gb,GENBANK
 NC_000932.gb,GENBANK
+AAA03323.embl,EMBL
+DD231055_edited.embl,EMBL
+Human_contigs.embl,EMBL
+TRBG361.embl,EMBL
 apaf.xml,PHYLOXML
 bcl_2.xml,PHYLOXML
 distribution.xml,PHYLOXML
