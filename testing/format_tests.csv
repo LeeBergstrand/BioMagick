@@ -9,6 +9,10 @@ error_diff_ids.fastq,FASTQ
 error_qual_space.fastq,FASTQ
 longreads_as_sanger.fastq,FASTQ
 solexa_full_range_as_illumina.fastq,FASTQ
+cw02.aln,CLUSTAL
+hedgehog.aln,CLUSTAL
+odd_consensus.aln,CLUSTAL
+opuntia.aln,CLUSTAL
 blank_seq.gb,GENBANK
 extra_keywords.gb,GENBANK
 NC_000932.gb,GENBANK
