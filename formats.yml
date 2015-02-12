@@ -16,7 +16,7 @@
   type: TEXT
   compression: NONE
   markers:
-    - "^\\s+\\d+\\s+\\d+\\n+[\\w\\s]{10}[catg]+"
+    - "^\\s+\\d+\\s+\\d+\\n+([\\w\\s]{10}\\s*[a-z\\s-]+\\n)+"
 -
   name: CLUSTAL
   type: TEXT

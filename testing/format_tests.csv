@@ -11,6 +11,8 @@ longreads_as_sanger.fastq,FASTQ
 solexa_full_range_as_illumina.fastq,FASTQ
 hennigian.phy,PHYLIP
 horses.phy,PHYLIP
+interleaved.phy,PHYLIP
+sequential.phy,PHYLIP
 fp_no_header.phy,unrecognized
 fp_no_seq.phy,unrecognized
 cw02.aln,CLUSTAL
