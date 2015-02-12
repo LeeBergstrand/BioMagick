@@ -9,6 +9,10 @@ error_diff_ids.fastq,FASTQ
 error_qual_space.fastq,FASTQ
 longreads_as_sanger.fastq,FASTQ
 solexa_full_range_as_illumina.fastq,FASTQ
+hennigian.phy,PHYLIP
+horses.phy,PHYLIP
+fp_no_header.phy,unrecognized
+fp_no_seq.phy,unrecognized
 cw02.aln,CLUSTAL
 hedgehog.aln,CLUSTAL
 odd_consensus.aln,CLUSTAL

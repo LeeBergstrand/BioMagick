@@ -12,6 +12,12 @@
   markers:
     - "\\n?@[^\\n]+\\n[a-zA-Z\\-]+\\n\\+[^\\n]*\\n[^\\n]+"
 -
+  name: PHYLIP
+  type: TEXT
+  compression: NONE
+  markers:
+    - "^\\s+\\d+\\s+\\d+\\n+[\\w\\s]{10}[catg]+"
+-
   name: CLUSTAL
   type: TEXT
   compression: NONE
