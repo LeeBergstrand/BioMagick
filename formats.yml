@@ -4,7 +4,7 @@
   type: TEXT
   compression: NONE
   markers:
-    - ">(gi)?.+\\n[ABCDEFGHIKLMNPQRSTUVWXYZ\\-\\.]+"
+    - "(^|\\n)>(gi)?.+\\n([ABCDEFGHIKLMNPQRSTUVWXYZ\\-\\.]+\\n)+"
 -
   name: FASTQ
   type: TEXT
