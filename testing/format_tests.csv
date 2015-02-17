@@ -43,6 +43,8 @@ trees.xml,NEXML
 bats.nex,NEXUS
 codonposset.nex,NEXUS
 int_node_labels.nwk,NEWICK
+funny.sth,STOCKHOLM
+simple.sth,STOCKHOLM
 greek.sff,SFF
 paired.sff,SFF
 ex1_refresh.bam,BAM

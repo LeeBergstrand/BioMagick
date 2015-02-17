@@ -76,6 +76,13 @@
   markers:
     - "\\((\\w+:[\\d\\.]+,?)+\\)(\\w+:[\\d\\.]+,?)+" # This might be too specific
 -
+  name: STOCKHOLM
+  type: TEXT
+  compression: NONE
+  markers:
+    - "^# stockholm [\\d\\.]+\\n"
+    - "(#=(\\w+ +)+[\\w .<>-]*\\n)+"
+-
   name: BAM
   type: BIN
   compression: GZIP
