@@ -40,6 +40,9 @@ global_species_example.xml,SEQXML
 characters.xml,NEXML
 phenoscape.xml,NEXML
 trees.xml,NEXML
+bats.nex,NEXUS
+codonposset.nex,NEXUS
+int_node_labels.nwk,NEWICK
 greek.sff,SFF
 paired.sff,SFF
 ex1_refresh.bam,BAM

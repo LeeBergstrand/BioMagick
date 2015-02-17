@@ -63,6 +63,19 @@
   markers:
     - "(?s)<nex:nexml[^>]+>.+<otus[^>]+>(\\s+<otu.+)+</otus>.+</nex:nexml>"
 -
+  name: NEXUS
+  type: TEXT
+  compression: NONE
+  markers:
+    - "^#nexus\\n"
+    - "begin \\w+;\\n([^;]+;?)+end;"
+-
+  name: NEWICK
+  type: TEXT
+  compression: NONE
+  markers:
+    - "\\((\\w+:[\\d\\.]+,?)+\\)(\\w+:[\\d\\.]+,?)+" # This might be too specific
+-
   name: BAM
   type: BIN
   compression: GZIP
