@@ -3,24 +3,28 @@
   name: fasta
   type: TEXT
   compression: NONE
+  extension: fa
   markers:
     - "(^|\\n)>(gi)?.+\\n([ABCDEFGHIKLMNPQRSTUVWXYZ\\-\\.]+\\n)+"
 -
   name: fastq
   type: TEXT
   compression: NONE
+  extension: fastq
   markers:
     - "\\n?@[^\\n]+\\n[a-zA-Z\\-]+\\n\\+[^\\n]*\\n[^\\n]+"
 -
   name: phylip
   type: TEXT
   compression: NONE
+  extension: phy
   markers:
     - "^\\s+\\d+\\s+\\d+\\n+([\\w\\s]{10}\\s*[a-z\\s-]+\\n)+"
 -
   name: clustal
   type: TEXT
   compression: NONE
+  extension: aln
   markers:
     # References:
     #   http://meme.nbcr.net/meme/doc/clustalw-format.html
@@ -31,6 +35,7 @@
   name: genbank
   type: TEXT
   compression: NONE
+  extension: genbank
   markers:
     - "LOCUS.+"
     - "DEFINITION.+"
@@ -38,6 +43,7 @@
   name: embl
   type: TEXT
   compression: NONE
+  extension: embl
   markers:
     # References:
     # http://www.genebee.msu.su/services/Kw-help.html#SP
@@ -48,24 +54,28 @@
   name: seqxml
   type: TEXT
   compression: NONE
+  extension: xml
   markers:
     - "<seqxml[^<]+<entry"
 -
   name: phyloxml
   type: TEXT
   compression: NONE
+  extension: xml
   markers:
     - "(?s)<(\\w+:)?phyloxml[^<]+<(\\w+:)?phylogeny\\srooted=\"(true|false)\".+<(\\w+:)?clade.+</(\\w+:)?phylogeny>.+</(\\w+:)?phyloxml>"
 -
   name: nexml
   type: TEXT
   compression: NONE
+  extension: xml
   markers:
     - "(?s)<nex:nexml[^>]+>.+<otus[^>]+>(\\s+<otu.+)+</otus>.+</nex:nexml>"
 -
   name: nexus
   type: TEXT
   compression: NONE
+  extension: nex
   markers:
     - "^#nexus\\n"
     - "begin \\w+;\\n([^;]+;?)+end;"
@@ -73,12 +83,14 @@
   name: newick
   type: TEXT
   compression: NONE
+  extension: nwk
   markers:
     - "\\((\\w+:[\\d\\.]+,?)+\\)(\\w+:[\\d\\.]+,?)+" # This might be too specific
 -
   name: stockholm
   type: TEXT
   compression: NONE
+  extension: sth
   markers:
     - "^# stockholm [\\d\\.]+\\n"
     - "(#=(\\w+ +)+[\\w .<>-]*\\n)+"
@@ -86,12 +98,14 @@
   name: bam
   type: BIN
   compression: GZIP
+  extension: bam
   markers:
     - "\\x1f\\x8b\\x08\\x04\\x00\\x00\\x00\\x00\\x00\\xff\\x06\\x00\\x42\\x43\\x02\\x00"
 -
   name: sff
   type: BIN
   compression: NONE
+  extension: sff
   markers:
     - "\\x2e\\x73\\x66\\x66\\x00\\x00\\x00\\x01"
 ...
