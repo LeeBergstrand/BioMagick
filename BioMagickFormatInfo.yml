@@ -1,0 +1,44 @@
+---
+-
+  name: fasta
+  extension: fa
+-
+  name: fastq
+  extension: fastq
+-
+  name: phylip
+  extension: phy
+-
+  name: clustal
+  extension: aln
+-
+  name: genbank
+  extension: genbank
+-
+  name: embl
+  extension: embl
+-
+  name: seqxml
+  extension: xml
+-
+  name: phyloxml
+  extension: xml
+-
+  name: nexml
+  extension: xml
+-
+  name: nexus
+  extension: nex
+-
+  name: newick
+  extension: nwk
+-
+  name: stockholm
+  extension: sth
+-
+  name: bam
+  extension: bam
+-
+  name: sff
+  extension: sff
+...

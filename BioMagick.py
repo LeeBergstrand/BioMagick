@@ -3,7 +3,7 @@
 # ============================================================================================================
 # Created by: Lee Bergstrand & Matt McInnes
 # Description: A next generation bioinformatics file format converter and sequence feature extractor.
-# Requirements: - This script requires the Biopython module: http://biopython.org/wiki/Download
+# Requirements: This script requires the Biopython module: http://biopython.org/wiki/Download
 # ============================================================================================================
 
 from __future__ import print_function
@@ -12,6 +12,7 @@ from Bio import Alphabet
 from Bio import AlignIO
 from Bio import Phylo
 from BioID import BioID
+from BioID import BioFormat
 import ntpath
 import os
 import argparse
@@ -56,10 +57,11 @@ def cli():
 	if args.outdir:
 		os.chdir(args.outdir)  # Set working directory of script to output dir.
 
-	id_results = BioID("./formats.yml").identify(input_files)
+	id_results = BioID("./BioIDFormatInfo.yml").identify(input_files)
 
 	if out_fmt:
 		direct_convert(id_results, out_fmt, alphabet)
+
 
 # ------------------------------------------------------------
 # Generates of dictionary of sequence record objects per file.
