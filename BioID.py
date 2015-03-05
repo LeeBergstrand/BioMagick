@@ -11,8 +11,8 @@ import codecs
 from binaryornot.check import is_binary
 
 
-# BioFormat: Defines the properties of a bioinformatic file format object:
-class BioFormat(object):
+# BioIDFormat: Defines the properties of a bioinformatic file format object:
+class BioIDFormat(object):
 	def __init__(self, name, file_type, compression, markers):
 		self.name = str(name)
 		self.file_type = str(file_type)
@@ -20,7 +20,7 @@ class BioFormat(object):
 		self.markers = list(markers)
 
 
-# BioFormat: Defines the properties of a bioinformatic file identification object:
+# BioIDFormat: Defines the properties of a bioinformatic file identification object:
 class BioID(object):
 	def __init__(self, path):
 		self.binary_definitions = []
@@ -33,10 +33,10 @@ class BioID(object):
 		for definition in yaml.safe_load(contents):
 			if definition["type"] == "BIN":
 				self.binary_definitions.append(
-					BioFormat(definition["name"], definition["type"], definition["compression"], definition["markers"]))
+					BioIDFormat(definition["name"], definition["type"], definition["compression"], definition["markers"]))
 			elif definition["type"] == "TEXT":
 				self.text_definitions.append(
-					BioFormat(definition["name"], definition["type"], definition["compression"], definition["markers"]))
+					BioIDFormat(definition["name"], definition["type"], definition["compression"], definition["markers"]))
 
 	# Method used to search binary files for raw byte sequences
 	def identify_binary(self, file_path):
