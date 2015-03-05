@@ -29,7 +29,7 @@ class BioID(object):
 		with open(path, "rU") as definition_file:
 			contents = definition_file.read()
 
-		# Load JSON format definitions and parse into binary and text lists
+		# Load YAML format definitions and parse into binary and text lists
 		for definition in yaml.safe_load(contents):
 			if definition["type"] == "BIN":
 				self.binary_definitions.append(
