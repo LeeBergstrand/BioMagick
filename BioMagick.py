@@ -8,7 +8,7 @@
 
 from __future__ import print_function
 from Bio import SeqIO
-from Bio import Alphabet
+from Bio.Alphabet import IUPAC
 from Bio import AlignIO
 from Bio import Phylo
 from BioID import BioID
@@ -17,11 +17,12 @@ import ntpath
 import os
 import argparse
 import sys
+import yaml
 
 
 class BioMagickFormat(BioIDFormat):
 	def __init__(self, name, extension, bioclass):
-		super(BioMagickFormat, self).__init__(name, None, None, None)
+		super(BioMagickFormat, self).__init__(name, None, None, [])
 		self.extension = extension
 		self.bioclass = bioclass
 
@@ -29,17 +30,17 @@ class BioMagickFormat(BioIDFormat):
 # Command line interface options.
 # -------------------------------
 parser = argparse.ArgumentParser()
-parser.add_argument('-i', '--input', metavar='PATH', nargs='+', help='''
+parser.add_argument('-i', '--input', metavar='INPATH', nargs='+', help='''
 A list of input file paths. If not specified, input is read from stdin''')
 
-parser.add_argument('-o', '--outdir', metavar='PATH', nargs='+', help='''
+parser.add_argument('-o', '--outdir', metavar='OUTPATH', nargs='+', help='''
 An output directory for output files. If not specified, output is piped to stdout.''')
 
-parser.add_argument('-f', '--outfmt', metavar='FORMAT', nargs='+', help='''
+parser.add_argument('-f', '--outfmt', metavar='OUTFORMAT', nargs='+', help='''
 A List of output file formats.''')
 
-parser.add_argument('-a', '--alphabet', metavar='FORMAT', nargs='+', help='''
-The alphabet to use for conversion ('dna', 'rna', or 'prot').''')
+parser.add_argument('-a', '--alphabet', metavar='ALPHA', nargs=1, help='''
+The alphabet to use for conversion (ambigdna, unambigdna, exdna, ambigrna, unambigrna, prot, exprot).''')
 
 args = parser.parse_args()
 
@@ -51,23 +52,51 @@ def cli():
 	input_files = args.input
 	out_fmt = args.outfmt
 
-	alphabet = args.alphabet[0]
-	if alphabet == 'dna':
-		alphabet = Alphabet.DNAAlphabet
-		print(alphabet)
-		print(isinstance(Alphabet, alphabet))
-	elif alphabet == 'rna':
-		alphabet = Alphabet.RNAAlphabet
-	elif alphabet == 'prot':
-		alphabet = Alphabet.ProteinAlphabet
+	if input_files is None or input_files == []:
+		print("Error: at least 1 input file is needed")
+		exit(1)
+
+	if out_fmt is None or out_fmt == []:
+		print("Error: at laest 1 output format is needed")
+		exit(1)
+
+	if args.alphabet is not None:
+		alphabet = args.alphabet[0]
+		if alphabet == 'ambigdna':
+			alphabet = IUPAC.IUPACAmbiguousDNA()
+		elif alphabet == "unambigdna":
+			alphabet = IUPAC.IUPACUnambiguousDNA()
+		elif alphabet == "exdna":
+			alphabet = IUPAC.ExtendedIUPACDNA()
+		elif alphabet == 'ambigrna':
+			alphabet = IUPAC.IUPACAmbiguousRNA()
+		elif alphabet == "unambigrna":
+			alphabet = IUPAC.IUPACUnambiguousRNA()
+		elif alphabet == 'prot':
+			alphabet = IUPAC.IUPACProtein()
+		elif alphabet == "exprot":
+			alphabet = IUPAC.ExtendedIUPACProtein()
+		else:
+			print("Error: %s is not a valid alphabet" % alphabet)
+			print("Valid alphabets: ambigdna, unambigdna, exdna, ambigrna, unambigrna, prot, exprot")
+			exit(1)
+	else:
+		alphabet = ""
 
 	if args.outdir:
+		# Note: This breaks relative paths for any input files
 		os.chdir(args.outdir)  # Set working directory of script to output dir.
 
-	id_results = BioID("./BioIDFormatInfo.yml").identify(input_files)
+	# Load and parse YAML format export settings
+	with open("BioMagickFormatInfo.yml", "rU") as settings_file:
+		contents = settings_file.read()
 
-	if out_fmt:
-		direct_convert(id_results, out_fmt, alphabet)
+	settings = {}
+	for setting in yaml.safe_load(contents):
+		settings[setting["name"]] = BioMagickFormat(setting["name"], setting["extension"], setting["bioclass"])
+
+	id_results = BioID("./BioIDFormatInfo.yml").identify(input_files)
+	direct_convert(settings, id_results, out_fmt, alphabet)
 
 
 # ------------------------------------------------------------
@@ -87,25 +116,34 @@ def generate_sequence_objects(id_results):
 # ------------------------------------------------------------
 # Generates of dictionary of sequence record objects per file.
 # ------------------------------------------------------------
-def direct_convert(id_results, out_fmt, alphabet):
+def direct_convert(settings, id_results, out_formats, alphabet):
 
-	for format_type in out_fmt:
-		for file_path, identity in id_results.items():
+	for out_format in out_formats:
+		for in_path, in_format in id_results.items():
 
 			if sys.platform == "win32":
-				file_name = ntpath.basename(file_path).split('.')[0]
+				out_path = ntpath.basename(in_path).split('.')[0]
 			else:
-				file_name = os.path.basename(file_path).split('.')[0]
+				out_path = os.path.basename(in_path).split('.')[0]
 
-			file_name = file_name + "." + format_type
-
-			print("Converting " + file_path + " to " + format_type)
+			out_extension = settings[out_format].extension
+			out_path = out_path + "." + out_extension
+			print("Converting %s file %s to %s file %s" % (in_format, in_path, out_format, out_path))
 
 			try:
-				SeqIO.convert(file_path, identity.lower(), file_name, format_type, alphabet)
+				format_setting = settings[id_results[in_path]]
+				if format_setting.bioclass == "seq":
+					SeqIO.convert(in_path, in_format.lower(), out_path, out_format, alphabet)
+				elif format_setting.bioclass == "phylo":
+					Phylo.convert(in_path, in_format.lower(), out_path, out_format)
+				elif format_setting.bioclass == "align":
+					AlignIO.convert(in_path, in_format.lower(), out_path, out_format)
+				else:
+					print("Error: invalid BioPython conversion class: %s" % format_setting.bioclass)
+					exit(1)
 			except ValueError as e:
-				print("\nError in conversion of " + file_path + " to " + format_type + ": " + str(e))
-				print("Skipping " + file_path + " ...\n")
+				print("\nError in conversion of " + in_path + " to " + out_format + ": " + str(e))
+				print("Skipping " + in_path + " ...\n")
 				continue
 
 if __name__ == '__main__':
