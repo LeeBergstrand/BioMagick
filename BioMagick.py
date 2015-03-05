@@ -12,11 +12,18 @@ from Bio import Alphabet
 from Bio import AlignIO
 from Bio import Phylo
 from BioID import BioID
-from BioID import BioFormat
+from BioID import BioIDFormat
 import ntpath
 import os
 import argparse
 import sys
+
+
+class BioMagickFormat(BioIDFormat):
+	def __init__(self, name, extension, bioclass):
+		super(BioMagickFormat, self).__init__(name, None, None, None)
+		self.extension = extension
+		self.bioclass = bioclass
 
 # -------------------------------
 # Command line interface options.
@@ -32,7 +39,7 @@ parser.add_argument('-f', '--outfmt', metavar='FORMAT', nargs='+', help='''
 A List of output file formats.''')
 
 parser.add_argument('-a', '--alphabet', metavar='FORMAT', nargs='+', help='''
-A List of output file formats.''')
+The alphabet to use for conversion ('dna', 'rna', or 'prot').''')
 
 args = parser.parse_args()
 
