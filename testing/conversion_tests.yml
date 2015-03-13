@@ -1,0 +1,16 @@
+---
+-
+  inputs:
+    - f001
+    - f002
+    - f003
+    - fa01
+  outputs:
+    - f001.fq
+    - f002.fq
+    - f003.fq
+    - fa01.fq
+  formats:
+    - fastq
+  alphabet: unambigdna
+...
