@@ -26,31 +26,14 @@ class BioMagickFormat(BioIDFormat):
 		self.extension = extension
 		self.bioclass = bioclass
 
-# -------------------------------
-# Command line interface options.
-# -------------------------------
-parser = argparse.ArgumentParser()
-parser.add_argument('-i', '--input', metavar='INPATH', nargs='+', help='''
-A list of input file paths. If not specified, input is read from stdin''')
-
-parser.add_argument('-o', '--outdir', metavar='OUTPATH', nargs='+', help='''
-An output directory for output files. If not specified, output is piped to stdout.''')
-
-parser.add_argument('-f', '--outfmt', metavar='OUTFORMAT', nargs='+', help='''
-A List of output file formats.''')
-
-parser.add_argument('-a', '--alphabet', metavar='ALPHA', nargs=1, help='''
-The alphabet to use for conversion (ambigdna, unambigdna, exdna, ambigrna, unambigrna, prot, exprot).''')
-
-args = parser.parse_args()
-
 
 # ----------------------------------
 # Command line interface Controller.
 # ----------------------------------
-def cli():
+def main(args):
 	input_files = args.input
 	out_fmt = args.outfmt
+	out_dir = args.outdir[0]
 
 	if input_files is None or input_files == []:
 		print("Error: at least 1 input file is needed")
@@ -83,10 +66,6 @@ def cli():
 	else:
 		alphabet = ""
 
-	if args.outdir:
-		# Note: This breaks relative paths for any input files
-		os.chdir(args.outdir)  # Set working directory of script to output dir.
-
 	# Load and parse YAML format export settings
 	with open("BioMagickFormatInfo.yml", "rU") as settings_file:
 		contents = settings_file.read()
@@ -96,7 +75,7 @@ def cli():
 		settings[setting["name"]] = BioMagickFormat(setting["name"], setting["extension"], setting["bioclass"])
 
 	id_results = BioID("./BioIDFormatInfo.yml").identify(input_files)
-	direct_convert(settings, id_results, out_fmt, alphabet)
+	direct_convert(settings, id_results, out_dir, out_fmt, alphabet)
 
 
 # ------------------------------------------------------------
@@ -116,15 +95,19 @@ def generate_sequence_objects(id_results):
 # ------------------------------------------------------------
 # Generates of dictionary of sequence record objects per file.
 # ------------------------------------------------------------
-def direct_convert(settings, id_results, out_formats, alphabet):
-
+def direct_convert(settings, id_results, out_path, out_formats, alphabet):
 	for out_format in out_formats:
 		for in_path, in_format in id_results.items():
-
 			if sys.platform == "win32":
-				out_path = ntpath.basename(in_path).split('.')[0]
+				if out_path[-1] != "/":
+					out_path += "/"
+
+				out_path += ntpath.basename(in_path).split('.')[0]
 			else:
-				out_path = os.path.basename(in_path).split('.')[0]
+				if out_path[-1] != "\\":
+					out_path += "\\"
+
+				out_path += os.path.basename(in_path).split('.')[0]
 
 			out_extension = settings[out_format].extension
 			out_path = out_path + "." + out_extension
@@ -147,4 +130,20 @@ def direct_convert(settings, id_results, out_formats, alphabet):
 				continue
 
 if __name__ == '__main__':
-	cli()
+	# -------------------------------
+	# Command line interface options.
+	# -------------------------------
+	parser = argparse.ArgumentParser()
+	parser.add_argument('-i', '--input', metavar='INPATH', nargs='+', help='''
+	A list of input file paths. If not specified, input is read from stdin''')
+
+	parser.add_argument('-o', '--outdir', metavar='OUTPATH', nargs=1, help='''
+	An output directory for output files. If not specified, output is piped to stdout.''')
+
+	parser.add_argument('-f', '--outfmt', metavar='OUTFORMAT', nargs='+', help='''
+	A List of output file formats.''')
+
+	parser.add_argument('-a', '--alphabet', metavar='ALPHA', nargs=1, help='''
+	The alphabet to use for conversion (ambigdna, unambigdna, exdna, ambigrna, unambigrna, prot, exprot).''')
+
+	main(parser.parse_args())
