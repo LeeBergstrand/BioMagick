@@ -33,7 +33,7 @@ class BioMagickFormat(BioIDFormat):
 def main(args):
 	input_files = args.input
 	out_fmt = args.outfmt
-	out_dir = args.outdir[0]
+	out_dir = args.outdir[0] if args.outdir else "."
 
 	if input_files is None or input_files == []:
 		print("Error: at least 1 input file is needed")
