@@ -98,29 +98,30 @@ def generate_sequence_objects(id_results):
 def direct_convert(settings, id_results, out_path, out_formats, alphabet):
 	for out_format in out_formats:
 		for in_path, in_format in id_results.items():
+			out_file = out_path
 			if sys.platform == "win32":
-				if out_path[-1] != "/":
-					out_path += "/"
+				if out_file[-1] != "/":
+					out_file += "/"
 
-				out_path += ntpath.basename(in_path).split('.')[0]
+				out_file += ntpath.basename(in_path).split('.')[0]
 			else:
-				if out_path[-1] != "\\":
-					out_path += "\\"
+				if out_file[-1] != "\\":
+					out_file += "\\"
 
-				out_path += os.path.basename(in_path).split('.')[0]
+				out_file += os.path.basename(in_path).split('.')[0]
 
 			out_extension = settings[out_format].extension
-			out_path = out_path + "." + out_extension
-			print("Converting %s file %s to %s file %s" % (in_format, in_path, out_format, out_path))
+			out_file = out_file + "." + out_extension
+			print("Converting %s file %s to %s file %s" % (in_format, in_path, out_format, out_file))
 
 			try:
 				format_setting = settings[id_results[in_path]]
 				if format_setting.bioclass == "seq":
-					SeqIO.convert(in_path, in_format.lower(), out_path, out_format, alphabet)
+					SeqIO.convert(in_path, in_format.lower(), out_file, out_format, alphabet)
 				elif format_setting.bioclass == "phylo":
-					Phylo.convert(in_path, in_format.lower(), out_path, out_format)
+					Phylo.convert(in_path, in_format.lower(), out_file, out_format)
 				elif format_setting.bioclass == "align":
-					AlignIO.convert(in_path, in_format.lower(), out_path, out_format)
+					AlignIO.convert(in_path, in_format.lower(), out_file, out_format)
 				else:
 					print("Error: invalid BioPython conversion class: %s" % format_setting.bioclass)
 					exit(1)
@@ -146,4 +147,7 @@ if __name__ == '__main__':
 	parser.add_argument('-a', '--alphabet', metavar='ALPHA', nargs=1, help='''
 	The alphabet to use for conversion (ambigdna, unambigdna, exdna, ambigrna, unambigrna, prot, exprot).''')
 
-	main(parser.parse_args())
+	cli_args = parser.parse_args()
+	cli_args.input = cli_args.input[0].split(",")
+	cli_args.outfmt = cli_args.outfmt[0].split(",")
+	main(cli_args)
