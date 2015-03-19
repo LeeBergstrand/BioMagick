@@ -1,16 +1,12 @@
 ---
 -
   inputs:
-    - f001
-    - f002
-    - f003
-    - fa01
+    - ./testing/testFiles/longreads_as_sanger.fq
+    - ./testing/testFiles/error_qual_space.fq
   outputs:
-    - f001.fq
-    - f002.fq
-    - f003.fq
-    - fa01.fq
+    - longreads_as_sanger.fa
+    - error_qual_space.fa
   formats:
-    - fastq
+    - fasta
   alphabet: unambigdna
 ...
