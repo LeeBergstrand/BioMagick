@@ -66,10 +66,7 @@ class BioID(object):
 		return "unrecognized"
 
 	# Method used to match regular expressions against "text" files
-	def identify_text(self, file_path):
-		text_input_file = open(file_path, "rU")  # Read in text file as text with universal newlines ("rU")
-		input_text = text_input_file.read()
-
+	def identify_text(self, input_text):
 		for text_file_type in self.text_definitions:
 			pattern_match = False
 			for regex in text_file_type.markers:
@@ -80,21 +77,31 @@ class BioID(object):
 					pattern_match = False
 					break
 			if pattern_match:
-				text_input_file.close()
 				return text_file_type.name
 
-		text_input_file.close()
 		return "unrecognized"
 
 	# Method one used for identifying the file type of a list for files:
-	def identify(self, files):
+	def identify(self, input_data):
 		identified = {}
 
-		# Check if each each file is binary or text and use the appropriate marker (regex or byte field).
-		for file_path in files:
-			if is_binary(file_path):
-				identified[file_path] = self.identify_binary(file_path)
-			else:
-				identified[file_path] = self.identify_text(file_path)
+		if type(input_data) == list:
+			# identify() was passed a list of filenames
+			for file_path in input_data:
+				# Check if each each file is binary or text and use the appropriate marker (regex or byte field).
+				if is_binary(file_path):
+					identified[file_path] = self.identify_binary(file_path)
+				else:
+					text_input_file = open(file_path, "rU")  # Read in text file as text with universal newlines ("rU")
+					input_text = text_input_file.read()
+					text_input_file.close()
+					identified[file_path] = self.identify_text(input_text)
+		elif type(input_data) == str:
+			# identify() was passed a string from stdin
+			identified["unknown_text"] = self.identify_text(input_data)
+		else:
+			# indentify() was (probably) passed some useless garbage
+			print("Error: identify() received unrecognized input data: %s" % str(input_data))
+			exit(1)
 
 		return identified

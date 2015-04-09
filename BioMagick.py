@@ -35,10 +35,6 @@ def main(args):
 	out_fmt = args.outfmt
 	out_dir = args.outdir[0] if args.outdir else "."
 
-	if input_files is None or input_files == []:
-		print("Error: at least 1 input file is needed")
-		exit(1)
-
 	if out_fmt is None or out_fmt == []:
 		print("Error: at laest 1 output format is needed")
 		exit(1)
@@ -74,7 +70,14 @@ def main(args):
 	for setting in yaml.safe_load(contents):
 		settings[setting["name"]] = BioMagickFormat(setting["name"], setting["extension"], setting["bioclass"])
 
-	id_results = BioID("./BioIDFormatInfo.yml").identify(input_files)
+	if input_files is None or input_files == []:
+		id_results = BioID("./BioIDFormatInfo.yml").identify(input_files)
+	else:
+		if sys.stdin.isatty():
+			print("Error: you must either specify an input file or pipe some data to stdin")
+			exit(1)
+		id_results = BioID("./BioIDFormatInfo.yml").identify(sys.stdin.read())
+
 	direct_convert(settings, id_results, out_dir, out_fmt, alphabet)
 
 
