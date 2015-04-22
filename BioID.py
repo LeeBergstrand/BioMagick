@@ -81,14 +81,13 @@ class BioID(object):
 
 		return "unrecognized"
 
-	# Method one used for identifying the file type of a list for files:
+	# Method used for identifying the file type of a list of files or a block of text received from stdin:
 	def identify(self, input_data):
 		identified = {}
 
 		if type(input_data) == list:
 			# identify() was passed a list of filenames
 			for file_path in input_data:
-				# Check if each each file is binary or text and use the appropriate marker (regex or byte field).
 				if is_binary(file_path):
 					identified[file_path] = self.identify_binary(file_path)
 				else:
