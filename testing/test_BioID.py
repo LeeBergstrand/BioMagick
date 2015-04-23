@@ -1,16 +1,16 @@
 #!/usr/bin/env python
 
-# ----------------------------------------------------------------------------------------------
-# Created by: Lee & Matt
-#
-# Description: Contains unit test for BioID Class
-# ----------------------------------------------------------------------------------------------
+# ==============================================================================================
+# Created by: Lee Bergstrand & Matt McInnes
+# Description: A python script which autogenerates unit tests for BioID Class
 # ==============================================================================================
 
 from BioID import BioID
 
 
+# ================================================================
 # Nose test generator to iterate format test files defined in CSVs
+# ================================================================
 class TestFormatDefinitions(object):
 	def test_formats(self):
 		with open("./testing/format_tests.csv", "rU") as formats_file:

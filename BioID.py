@@ -1,7 +1,12 @@
 #!/usr/bin/env python
-#
-# A class for auto identifying BioInformatics file formats.
-# By Lee & Matt
+
+# ============================================================================================================
+# Created by: Lee Bergstrand & Matt McInnes
+# Description: A class for auto-identification BioInformatics file formats.
+# Requirements:
+#   - This script requires the yaml module: pip install yaml
+#   - This script requires the binaryornot module: pip intall binaryornot
+# ============================================================================================================
 
 import sys
 import re
@@ -11,7 +16,9 @@ import codecs
 from binaryornot.check import is_binary
 
 
+# ==========================================================================
 # BioIDFormat: Defines the properties of a bioinformatic file format object:
+# ==========================================================================
 class BioIDFormat(object):
 	def __init__(self, name, file_type, compression, markers):
 		self.name = str(name)
@@ -20,7 +27,9 @@ class BioIDFormat(object):
 		self.markers = list(markers)
 
 
-# BioIDFormat: Defines the properties of a bioinformatic file identification object:
+# ============================================================================
+# BioID: Defines the properties of a bioinformatic file identification object:
+# ============================================================================
 class BioID(object):
 	def __init__(self, path):
 		self.binary_definitions = []
@@ -38,7 +47,9 @@ class BioID(object):
 				self.text_definitions.append(
 					BioIDFormat(definition["name"], definition["type"], definition["compression"], definition["markers"]))
 
+	# ---------------------------------------------------------
 	# Method used to search binary files for raw byte sequences
+	# ---------------------------------------------------------
 	def identify_binary(self, file_path):
 		binary_input_file = open(file_path, "rb")  # Read in binary file as binary ("rb")
 
@@ -65,7 +76,9 @@ class BioID(object):
 		binary_input_file.close()
 		return "unrecognized"
 
+	# -------------------------------------------------------------
 	# Method used to match regular expressions against "text" files
+	# -------------------------------------------------------------
 	def identify_text(self, input_text):
 		for text_file_type in self.text_definitions:
 			pattern_match = False
@@ -81,7 +94,9 @@ class BioID(object):
 
 		return "unrecognized"
 
+	# ----------------------------------------------------------------------------------------------------
 	# Method used for identifying the file type of a list of files or a block of text received from stdin:
+	# ----------------------------------------------------------------------------------------------------
 	def identify(self, input_data):
 		identified = {}
 
@@ -101,6 +116,6 @@ class BioID(object):
 		else:
 			# indentify() was (probably) passed some useless garbage
 			print("Error: identify() received unrecognized input data: %s" % str(input_data))
-			exit(1)
+			sys.exit(1)
 
 		return identified

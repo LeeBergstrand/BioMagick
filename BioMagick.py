@@ -39,12 +39,12 @@ def main(args):
 
 	if out_fmt is None or out_fmt == []:
 		print("Error: at laest 1 output format is needed")
-		exit(1)
+		sys.exit(1)
 
 	if args.stdout is True:
 		if len(input_files) > 1:
 			print("Error: outputting to stdout is only possible with single-file conversions")
-			exit(1)
+			sys.exit(1)
 		else:
 			out_dir = None  # Indicate to use stdout
 
@@ -67,7 +67,7 @@ def main(args):
 		else:
 			print("Error: %s is not a valid alphabet" % alphabet)
 			print("Valid alphabets: ambigdna, unambigdna, exdna, ambigrna, unambigrna, prot, exprot")
-			exit(1)
+			sys.exit(1)
 	else:
 		alphabet = None
 
@@ -83,7 +83,7 @@ def main(args):
 		# Convert single file from stdin
 		if sys.stdin.isatty():
 			print("Error: you must either specify an input file or pipe some data to stdin")
-			exit(1)
+			sys.exit(1)
 
 		id_results = BioID("./BioIDFormatInfo.yml").identify(sys.stdin.read())
 		direct_convert(settings, id_results, out_dir, out_fmt, alphabet)
@@ -110,14 +110,17 @@ def generate_sequence_objects(id_results):
 	return seq_objects
 
 
+# -------------------------------------------------------------------------------
+# A wrapper for the convert function which provides it with settings information.
+# -------------------------------------------------------------------------------
 def do_conversion(input_file, format_settings, output_path, output_formats, input_alphabet):
 	id_results = BioID("./BioIDFormatInfo.yml").identify([input_file])
 	direct_convert(format_settings, id_results, output_path, output_formats, input_alphabet)
 
 
-# ------------------------------------------------------------
-# Generates of dictionary of sequence record objects per file.
-# ------------------------------------------------------------
+# ---------------------------------------------------------------------------------------------
+# Converts between bioinformatic formats using SeqIO's, AlignIO's and Phylo's convert function.
+# ---------------------------------------------------------------------------------------------
 def direct_convert(settings, id_results, out_path, out_formats, alphabet):
 	if out_path is None:
 		out_file = "./conv.tmp"
@@ -134,10 +137,10 @@ def direct_convert(settings, id_results, out_path, out_formats, alphabet):
 				AlignIO.convert(in_path, in_format.lower(), out_file, out_format)
 			else:
 				print("Error: invalid BioPython conversion class: %s" % format_setting.bioclass)
-				exit(1)
+				sys.exit(1)
 		except ValueError as e:
 			print("Error in conversion of " + in_path + " to " + out_format + ": " + str(e))
-			exit(1)
+			sys.exit(1)
 
 		with open(out_file, "r") as tmp_file:
 			print(tmp_file.read())
@@ -172,7 +175,7 @@ def direct_convert(settings, id_results, out_path, out_formats, alphabet):
 						AlignIO.convert(in_path, in_format.lower(), out_file, out_format)
 					else:
 						print("Error: invalid BioPython conversion class: %s" % format_setting.bioclass)
-						exit(1)
+						sys.exit(1)
 				except ValueError as e:
 					print("\nError in conversion of " + in_path + " to " + out_format + ": " + str(e))
 					print("Skipping " + in_path + " ...\n")
