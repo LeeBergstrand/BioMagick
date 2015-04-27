@@ -27,12 +27,10 @@ class TestConversion(object):
 	@staticmethod
 	def check_conversion(input_files, expected_outputs, output_formats, alphabet):
 		# Set up CLI arguments
-		args = "-i %s -f %s -a %s" % (",".join(input_files), ",".join(output_formats), alphabet)
+		args = ["-i", ",".join(input_files), "-f", ",".join(output_formats), "-a", alphabet]
 
 		# Do conversion(s)
-		#ret = call("python BioMagick.py " + args)
-		print("[%] " + os.getcwd())
-		ret = call(["python", "-V"])
+		ret = call(["python", "BioMagick.py"] + args)
 		assert ret == 0
 
 		# Check outputs
