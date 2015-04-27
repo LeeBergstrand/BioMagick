@@ -2,10 +2,8 @@
 -
   inputs:
     - ./testing/testFiles/longreads_as_sanger.fq
-    - ./testing/testFiles/error_qual_space.fq
   outputs:
     - longreads_as_sanger.fa
-    - error_qual_space.fa
   formats:
     - fasta
   alphabet: unambigdna
