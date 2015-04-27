@@ -211,6 +211,11 @@ if __name__ == '__main__':
 	The number of processes to use for multiple files (defaults to the number of processor cores).''')
 
 	cli_args = parser.parse_args()
-	cli_args.input = cli_args.input[0].split(",")
-	cli_args.outfmt = cli_args.outfmt[0].split(",")
-	main(cli_args)
+
+	try:
+		cli_args.input = cli_args.input[0].split(",")
+		cli_args.outfmt = cli_args.outfmt[0].split(",")
+		main(cli_args)
+	except:
+		parser.print_help()
+		sys.exit(1)
