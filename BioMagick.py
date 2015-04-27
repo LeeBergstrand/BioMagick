@@ -151,13 +151,13 @@ def direct_convert(settings, id_results, out_path, out_formats, alphabet):
 			for in_path, in_format in id_results.items():
 				out_file = out_path
 				if sys.platform == "win32":
-					if out_file[-1] != "/":
-						out_file += "/"
+					if out_file[-1] != "\\":
+						out_file += "\\"
 
 					out_file += ntpath.basename(in_path).split('.')[0]
 				else:
-					if out_file[-1] != "\\":
-						out_file += "\\"
+					if out_file[-1] != "/":
+						out_file += "/"
 
 					out_file += os.path.basename(in_path).split('.')[0]
 
@@ -201,6 +201,8 @@ if __name__ == '__main__':
 
 	parser.add_argument('-a', '--alphabet', metavar='ALPHA', nargs=1, help='''
 	The alphabet to use for conversion (ambigdna, unambigdna, exdna, ambigrna, unambigrna, prot, exprot).''')
+
+	parser.add_argument('-p', '')
 
 	cli_args = parser.parse_args()
 	cli_args.input = cli_args.input[0].split(",")
