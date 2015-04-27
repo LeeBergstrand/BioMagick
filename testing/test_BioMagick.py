@@ -30,7 +30,9 @@ class TestConversion(object):
 		args = "-i %s -f %s -a %s" % (",".join(input_files), ",".join(output_formats), alphabet)
 
 		# Do conversion(s)
-		ret = call("python ../BioMagick.py " + args)
+		#ret = call("python BioMagick.py " + args)
+		ret = call("python -v")
+		print("[%] " + os.getcwd())
 		assert ret == 0
 
 		# Check outputs
