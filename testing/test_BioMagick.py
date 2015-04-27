@@ -32,7 +32,7 @@ class TestConversion(object):
 		# Do conversion(s)
 		#ret = call("python BioMagick.py " + args)
 		print("[%] " + os.getcwd())
-		ret = call(["python", "-v"])
+		ret = call(["python", "-V"])
 		assert ret == 0
 
 		# Check outputs
