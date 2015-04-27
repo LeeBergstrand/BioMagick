@@ -31,8 +31,8 @@ class TestConversion(object):
 
 		# Do conversion(s)
 		#ret = call("python BioMagick.py " + args)
-		ret = call("python -v")
 		print("[%] " + os.getcwd())
+		ret = call(["python", "-v"])
 		assert ret == 0
 
 		# Check outputs
