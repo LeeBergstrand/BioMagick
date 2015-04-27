@@ -91,7 +91,12 @@ def main(args):
 		id_results = BioID("./BioIDFormatInfo.yml").identify(input_files)
 		direct_convert(settings, id_results, out_dir, out_fmt, alphabet)
 	else:
-		pool = multiprocessing.Pool(processes=multiprocessing.cpu_count())
+		if args.JOBS:
+			process_count = args.JOBS if args.JOBS >= len(input_files) else len(input_files)
+		else:
+			process_count = multiprocessing.cpu_count() if multiprocessing.cpu_count() > len(input_files) else len(input_files)
+
+		pool = multiprocessing.Pool(processes=process_count)
 		pool.map(functools.partial(do_conversion, format_settings=settings, output_path=out_dir, output_formats=out_fmt,
 		                           input_alphabet=alphabet), input_files)
 
@@ -202,7 +207,8 @@ if __name__ == '__main__':
 	parser.add_argument('-a', '--alphabet', metavar='ALPHA', nargs=1, help='''
 	The alphabet to use for conversion (ambigdna, unambigdna, exdna, ambigrna, unambigrna, prot, exprot).''')
 
-	parser.add_argument('-p', '')
+	parser.add_argument('-j', '--jobs', metavar='JOBS', nargs=1, type=int, help='''
+	The number of processes to use for multiple files (defaults to the number of processor cores).''')
 
 	cli_args = parser.parse_args()
 	cli_args.input = cli_args.input[0].split(",")
