@@ -48,6 +48,14 @@ def main(args):
 		else:
 			out_dir = None  # Indicate to use stdout
 
+	if sys.version_info[0] <= 2 and sys.version_info[1] <= 6:
+		old_py = True
+
+		if not args.stdout:
+			print("Warning: disabling multicore processing for Python <2.7")
+	else
+		old_py = False
+
 	if args.alphabet is not None:
 		alphabet = args.alphabet[0]
 		if alphabet == 'ambigdna':
@@ -87,7 +95,7 @@ def main(args):
 
 		id_results = BioID("./BioIDFormatInfo.yml").identify(sys.stdin.read())
 		direct_convert(settings, id_results, out_dir, out_fmt, alphabet)
-	elif len(input_files) == 1 or (sys.version_info[0] < 3 and sys.version_info[1] < 7):
+	elif len(input_files) == 1 or old_py:
 		id_results = BioID("./BioIDFormatInfo.yml").identify(input_files)
 		direct_convert(settings, id_results, out_dir, out_fmt, alphabet)
 	else:
