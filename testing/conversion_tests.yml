@@ -1,0 +1,30 @@
+---
+-
+  inputs:
+    - ./testing/testFiles/longreads_as_sanger.fq
+  outputs:
+    - longreads_as_sanger.fa
+  formats:
+    - fasta
+  alphabet: unambigdna
+-
+  inputs:
+    - ./testing/testFiles/simple.sth
+    - ./testing/testFiles/funny.sth
+  outputs:
+    - simple.fa
+    - funny.fa
+  formats:
+    - fasta
+-
+  inputs:
+    - ./testing/testFiles/NC_000932.gb
+    - ./testing/testFiles/blank_seq.gb
+    - ./testing/testFiles/extra_keywords.gb
+  outputs:
+    - NC_000932.fa
+    - blank_seq.fa
+    - extra_keywords.fa
+  formats:
+    - fasta
+...

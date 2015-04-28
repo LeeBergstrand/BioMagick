@@ -1,18 +1,24 @@
 ---
 -
-  name: FASTA
+  name: fasta
   type: TEXT
   compression: NONE
   markers:
-    - ">(gi)?.+\\n[ABCDEFGHIKLMNPQRSTUVWXYZ\\-\\.]+"
+    - "(^|\\n)>(gi)?.+\\n([ABCDEFGHIKLMNPQRSTUVWXYZ\\-\\.]+\\n)+"
 -
-  name: FASTQ
+  name: fastq
   type: TEXT
   compression: NONE
   markers:
     - "\\n?@[^\\n]+\\n[a-zA-Z\\-]+\\n\\+[^\\n]*\\n[^\\n]+"
 -
-  name: CLUSTAL
+  name: phylip
+  type: TEXT
+  compression: NONE
+  markers:
+    - "^\\s+\\d+\\s+\\d+\\n+([\\w\\s]{10}\\s*[a-z\\s-]+\\n)+"
+-
+  name: clustal
   type: TEXT
   compression: NONE
   markers:
@@ -22,14 +28,14 @@
     - "^(clustal(\\s?w)?)\\s(\\([\\d\\.]+\\)|[\\d\\.]+).*\\n+" # Header
     - "(\\n+[\\w|\\.-]+\\s+[a-z-]+(\\s+\\d+)?\\n)+\\s+([\\*\\s:\\.]+)?" # Sequence blocks
 -
-  name: GENBANK
+  name: genbank
   type: TEXT
   compression: NONE
   markers:
     - "LOCUS.+"
     - "DEFINITION.+"
 -
-  name: EMBL
+  name: embl
   type: TEXT
   compression: NONE
   markers:
@@ -39,31 +45,51 @@
     - "(xx|de\\s+[^\\n]+|os\\s+[^\\n]+|oc\\s+[^\\n]+|ft\\s+[^\\n]+)" # Secondary fields (these might not be needed!)
     - "\\nsq\\s+([\\w\\s]+;)+(\\n\\s+[atcg\\s]+\\s+\\d+)+|\\nco\\s+[\\w\\.\\(\\):,]+," # Sequence
 -
-  name: SEQXML
+  name: seqxml
   type: TEXT
   compression: NONE
   markers:
     - "<seqxml[^<]+<entry"
 -
-  name: PHYLOXML
+  name: phyloxml
   type: TEXT
   compression: NONE
   markers:
     - "(?s)<(\\w+:)?phyloxml[^<]+<(\\w+:)?phylogeny\\srooted=\"(true|false)\".+<(\\w+:)?clade.+</(\\w+:)?phylogeny>.+</(\\w+:)?phyloxml>"
 -
-  name: NEXML
+  name: nexml
   type: TEXT
   compression: NONE
   markers:
     - "(?s)<nex:nexml[^>]+>.+<otus[^>]+>(\\s+<otu.+)+</otus>.+</nex:nexml>"
 -
-  name: BAM
+  name: nexus
+  type: TEXT
+  compression: NONE
+  markers:
+    - "^#nexus\\n"
+    - "begin \\w+;\\n([^;]+;?)+end;"
+-
+  name: newick
+  type: TEXT
+  compression: NONE
+  markers:
+    - "\\((\\w+:[\\d\\.]+,?)+\\)(\\w+:[\\d\\.]+,?)+" # This might be too specific
+-
+  name: stockholm
+  type: TEXT
+  compression: NONE
+  markers:
+    - "^# stockholm [\\d\\.]+\\n"
+    - "(#=(\\w+ +)+[\\w .<>-]*\\n)+"
+-
+  name: bam
   type: BIN
   compression: GZIP
   markers:
     - "\\x1f\\x8b\\x08\\x04\\x00\\x00\\x00\\x00\\x00\\xff\\x06\\x00\\x42\\x43\\x02\\x00"
 -
-  name: SFF
+  name: sff
   type: BIN
   compression: NONE
   markers:
