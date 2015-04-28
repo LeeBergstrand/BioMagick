@@ -53,7 +53,7 @@ def main(args):
 
 		if not args.stdout:
 			print("Warning: disabling multicore processing for Python <2.7")
-	else
+	else:
 		old_py = False
 
 	if args.alphabet is not None:
