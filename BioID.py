@@ -16,9 +16,9 @@ import codecs
 from binaryornot.check import is_binary
 
 
-# ==========================================================================
-# BioIDFormat: Defines the properties of a bioinformatic file format object:
-# ==========================================================================
+# =========================================================================
+# BioIDFormat: Defines the properties of a bioinformatic file format object
+# =========================================================================
 class BioIDFormat(object):
 	def __init__(self, name, file_type, compression, markers):
 		self.name = str(name)
@@ -27,9 +27,9 @@ class BioIDFormat(object):
 		self.markers = list(markers)
 
 
-# ============================================================================
-# BioID: Defines the properties of a bioinformatic file identification object:
-# ============================================================================
+# ===========================================================================
+# BioID: Defines the properties of a bioinformatic file identification object
+# ===========================================================================
 class BioID(object):
 	def __init__(self, path):
 		self.binary_definitions = []
@@ -94,9 +94,9 @@ class BioID(object):
 
 		return "unrecognized"
 
-	# ----------------------------------------------------------------------------------------------------
-	# Method used for identifying the file type of a list of files or a block of text received from stdin:
-	# ----------------------------------------------------------------------------------------------------
+	# ---------------------------------------------------------------------------------------------------
+	# Method used for identifying the file type of a list of files or a block of text received from stdin
+	# ---------------------------------------------------------------------------------------------------
 	def identify(self, input_data):
 		identified = {}
 
