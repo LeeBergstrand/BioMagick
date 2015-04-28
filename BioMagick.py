@@ -176,7 +176,7 @@ def direct_convert(settings, id_results, out_path, out_formats, alphabet):
 
 				out_extension = settings[out_format].extension
 				out_file = out_file + "." + out_extension
-				print("Converting %s file %s to %s file %s" % (in_format, in_path, out_format, out_file))
+				print("\nConverting %s file %s to %s file %s" % (in_format, in_path, out_format, out_file))
 
 				try:
 					format_setting = settings[in_format]
