@@ -16,4 +16,15 @@
     - funny.fa
   formats:
     - fasta
+-
+  inputs:
+    - ./testing/testFiles/NC_000932.gb
+    - ./testing/testFiles/blank_seq.gb
+    - ./testing/testFiles/extra_keywords.gb
+  outputs:
+    - NC_000932.fa
+    - blank_seq.fa
+    - extra_keywords.fa
+  formats:
+    - fasta
 ...
