@@ -22,6 +22,10 @@ import multiprocessing
 import functools
 
 
+# ==============================================================================
+# BioMagickFormat: Defines the properties of a bioinformatic file format
+#                  object with extra data specific for BioMagick's functionality
+# ==============================================================================
 class BioMagickFormat(BioIDFormat):
 	def __init__(self, name, extension, bioclass):
 		super(BioMagickFormat, self).__init__(name, None, None, [])
@@ -29,9 +33,9 @@ class BioMagickFormat(BioIDFormat):
 		self.bioclass = bioclass
 
 
-# ----------------------------------
-# Command line interface Controller.
-# ----------------------------------
+# ---------------------------------
+# Command line interface controller
+# ---------------------------------
 def main(args):
 	input_files = args.input
 	out_fmt = args.outfmt
@@ -97,13 +101,13 @@ def main(args):
 			process_count = multiprocessing.cpu_count() if multiprocessing.cpu_count() > len(input_files) else len(input_files)
 
 		pool = multiprocessing.Pool(processes=process_count)
-		pool.map(functools.partial(do_conversion, format_settings=settings, output_path=out_dir, output_formats=out_fmt,
+		pool.map(functools.partial(subprocess_controller, format_settings=settings, output_path=out_dir, output_formats=out_fmt,
 		                           input_alphabet=alphabet), input_files)
 
 
-# ------------------------------------------------------------
-# Generates of dictionary of sequence record objects per file.
-# ------------------------------------------------------------
+# -----------------------------------------------------------
+# Generates of dictionary of sequence record objects per file
+# -----------------------------------------------------------
 def generate_sequence_objects(id_results):
 	seq_objects = {}
 
@@ -115,17 +119,17 @@ def generate_sequence_objects(id_results):
 	return seq_objects
 
 
-# -------------------------------------------------------------------------------
-# A wrapper for the convert function which provides it with settings information.
-# -------------------------------------------------------------------------------
-def do_conversion(input_file, format_settings, output_path, output_formats, input_alphabet):
+# --------------------------------------------------------------------------
+# A wrapper for the convert function which calls it from within a subprocess
+# --------------------------------------------------------------------------
+def subprocess_controller(input_file, format_settings, output_path, output_formats, input_alphabet):
 	id_results = BioID("./BioIDFormatInfo.yml").identify([input_file])
 	direct_convert(format_settings, id_results, output_path, output_formats, input_alphabet)
 
 
-# ---------------------------------------------------------------------------------------------
-# Converts between bioinformatic formats using SeqIO's, AlignIO's and Phylo's convert function.
-# ---------------------------------------------------------------------------------------------
+# --------------------------------------------------------------------------------------------
+# Converts between bioinformatic formats using SeqIO's, AlignIO's and Phylo's convert function
+# --------------------------------------------------------------------------------------------
 def direct_convert(settings, id_results, out_path, out_formats, alphabet):
 	if out_path is None:
 		out_file = "./conv.tmp"
@@ -188,9 +192,9 @@ def direct_convert(settings, id_results, out_path, out_formats, alphabet):
 
 
 if __name__ == '__main__':
-	# -------------------------------
-	# Command line interface options.
-	# -------------------------------
+	# ------------------------------
+	# Command line interface options
+	# ------------------------------
 	parser = argparse.ArgumentParser()
 	parser.add_argument('-i', '--input', metavar='INPATH', nargs='+', help='''
 	A list of input file paths. If not specified, input is read from stdin.''')
