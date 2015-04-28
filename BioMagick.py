@@ -91,8 +91,8 @@ def main(args):
 		id_results = BioID("./BioIDFormatInfo.yml").identify(input_files)
 		direct_convert(settings, id_results, out_dir, out_fmt, alphabet)
 	else:
-		if args.JOBS:
-			process_count = args.JOBS if args.JOBS >= len(input_files) else len(input_files)
+		if args.jobs is not None:
+			process_count = args.jobs if args.jobs >= len(input_files) else len(input_files)
 		else:
 			process_count = multiprocessing.cpu_count() if multiprocessing.cpu_count() > len(input_files) else len(input_files)
 
@@ -216,6 +216,7 @@ if __name__ == '__main__':
 		cli_args.input = cli_args.input[0].split(",")
 		cli_args.outfmt = cli_args.outfmt[0].split(",")
 		main(cli_args)
-	except:
+	except Exception as ex:
 		parser.print_help()
+		print("\nError: %s" % ex)
 		sys.exit(1)
