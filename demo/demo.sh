@@ -4,7 +4,7 @@
 ./BioMagick.py -i Human_contigs.embl -f fasta -o out
 
 # 4-to-1
-./BioMagick.py -i apaf_phylo.xml,bcl_2_phylo.xml,phylo_distribution.xml,phylo_example.xml -f nexus -o out
+./BioMagick.py -i apaf.xml,bcl_2.xml,distribution.xml,example.xml -f nexus -o out
 
 # 2-to-2
 ./BioMagick.py -i TRBG361.embl,AAA03323.embl -f genbank,fasta -o out
