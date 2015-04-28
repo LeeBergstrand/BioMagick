@@ -7,4 +7,13 @@
   formats:
     - fasta
   alphabet: unambigdna
+-
+  inputs:
+    - ./testing/testFiles/simple.sth
+    - ./testing/testFiles/funny.sth
+  outputs:
+    - simple.fa
+    - funny.fa
+  formats:
+    - fasta
 ...

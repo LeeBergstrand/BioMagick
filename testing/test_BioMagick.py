@@ -27,7 +27,9 @@ class TestConversion(object):
 	@staticmethod
 	def check_conversion(input_files, expected_outputs, output_formats, alphabet):
 		# Set up CLI arguments
-		args = ["-i", ",".join(input_files), "-f", ",".join(output_formats), "-a", alphabet]
+		args = ["-i", ",".join(input_files), "-f", ",".join(output_formats)]
+		if alphabet:
+			args += ["-a", alphabet]
 
 		# Do conversion(s)
 		ret = call(["python", "BioMagick.py"] + args)
