@@ -1,5 +1,9 @@
 #!/bin/bash
 
+if [ ! -d "out" ]; then
+	mkdir out
+fi
+
 # Simple 1-to-1
 ./BioMagick.py -i Human_contigs.embl -f fasta -o out
 
