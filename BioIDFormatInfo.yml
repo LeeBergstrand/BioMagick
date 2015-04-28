@@ -25,7 +25,7 @@
     # References:
     #   http://meme.nbcr.net/meme/doc/clustalw-format.html
     #   https://github.com/biopython/biopython/blob/4a53c2cd8135fa6819e8a560545aeb5f9f243123/Bio/AlignIO/ClustalIO.py
-    - "^(clustal(\\s?w)?)\\s(\\([\\d\\.]+\\)|[\\d\\.]+).*\\n+" # Header
+    - "^(clustal(\\s?[wx])?)\\s(\\([\\d\\.]+\\)|[\\d\\.]+).*\\n+" # Header
     - "(\\n+[\\w|\\.-]+\\s+[a-z-]+(\\s+\\d+)?\\n)+\\s+([\\*\\s:\\.]+)?" # Sequence blocks
 -
   name: genbank

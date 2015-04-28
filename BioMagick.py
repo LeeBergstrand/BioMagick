@@ -97,14 +97,18 @@ def main(args):
 			print("Error: you must either specify an input file or pipe some data to stdin")
 			sys.exit(1)
 
-		id_results = BioID("./BioIDFormatInfo.yml").identify(sys.stdin.read())
+		with open("converted.tmp", "w") as tmp_file:
+			tmp_file.write(sys.stdin.read())
+
+		id_results = BioID("./BioIDFormatInfo.yml").identify(["converted.tmp"])
 		direct_convert(settings, id_results, out_dir, out_fmt, alphabet)
+		os.remove("converted.tmp")
 	elif len(input_files) == 1 or old_py:
 		id_results = BioID("./BioIDFormatInfo.yml").identify(input_files)
 		direct_convert(settings, id_results, out_dir, out_fmt, alphabet)
 	else:
 		if args.jobs is not None:
-			process_count = args.jobs if args.jobs >= len(input_files) else len(input_files)
+			process_count = args.jobs if args.jobs <= len(input_files) else len(input_files)
 		else:
 			process_count = multiprocessing.cpu_count() if multiprocessing.cpu_count() > len(input_files) else len(input_files)
 
@@ -143,6 +147,9 @@ def direct_convert(settings, id_results, out_path, out_formats, alphabet):
 		out_file = "./conv.tmp"
 		in_path, in_format = list(id_results.items())[0]
 		out_format = out_formats[0]
+
+		if in_format == "unidentified":
+			raise Exception("Failed to identify the file")
 
 		try:
 			format_setting = settings[in_format]
@@ -225,10 +232,15 @@ if __name__ == '__main__':
 	cli_args = parser.parse_args()
 
 	try:
-		cli_args.input = cli_args.input[0].split(",")
+		if cli_args.input:
+			cli_args.input = cli_args.input[0].split(",")
 		cli_args.outfmt = cli_args.outfmt[0].split(",")
-		main(cli_args)
 	except Exception as ex:
 		parser.print_help()
-		print("\nError: %s" % ex)
 		sys.exit(1)
+
+	#try:
+	main(cli_args)
+	#except Exception as ex:
+		#print("\nError: %s" % ex)
+		#sys.exit(1)
