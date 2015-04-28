@@ -87,7 +87,7 @@ def main(args):
 
 		id_results = BioID("./BioIDFormatInfo.yml").identify(sys.stdin.read())
 		direct_convert(settings, id_results, out_dir, out_fmt, alphabet)
-	elif len(input_files) == 1:
+	elif len(input_files) == 1 or (sys.version_info.major < 3 and sys.version_info.minor < 7):
 		id_results = BioID("./BioIDFormatInfo.yml").identify(input_files)
 		direct_convert(settings, id_results, out_dir, out_fmt, alphabet)
 	else:
