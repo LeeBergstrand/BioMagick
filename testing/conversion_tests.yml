@@ -1,7 +1,7 @@
 ---
 -
   inputs:
-    - ./testing/testFiles/longreads_as_sanger.fq
+    - testing/testFiles/longreads_as_sanger.fq
   outputs:
     - longreads_as_sanger.fa
   formats:
@@ -9,8 +9,15 @@
   alphabet: unambigdna
 -
   inputs:
-    - ./testing/testFiles/simple.sth
-    - ./testing/testFiles/funny.sth
+    - testing/testFiles/f001
+  outputs:
+    - f001.sth
+  formats:
+    - stockholm
+-
+  inputs:
+    - testing/testFiles/simple.sth
+    - testing/testFiles/funny.sth
   outputs:
     - simple.fa
     - funny.fa
@@ -18,13 +25,85 @@
     - fasta
 -
   inputs:
-    - ./testing/testFiles/NC_000932.gb
-    - ./testing/testFiles/blank_seq.gb
-    - ./testing/testFiles/extra_keywords.gb
+    - testing/testFiles/NC_000932.gb
+    - testing/testFiles/blank_seq.gb
+    - testing/testFiles/extra_keywords.gb
   outputs:
     - NC_000932.fa
     - blank_seq.fa
     - extra_keywords.fa
   formats:
     - fasta
+-
+  inputs:
+    - testing/testFiles/apaf.xml
+    - testing/testFiles/bcl_2.xml
+    - testing/testFiles/distribution.xml
+  outputs:
+    - apaf.nwk
+    - bcl_2.nwk
+    - distribution.nwk
+  formats:
+    - newick
+-
+  inputs:
+    - testing/testFiles/int_node_labels.nwk 
+  outputs:
+    - int_node_labels.xml
+  formats:
+    - phyloxml
+-  inputs:
+    - testing/testFiles/cw02.aln
+    - testing/testFiles/hedgehog.aln
+    - testing/testFiles/odd_consensus.aln
+    - testing/testFiles/opuntia.aln
+  outputs:
+    - cw02.fa
+    - hedgehog.fa
+    - odd_consensus.fa
+    - opuntia.fa
+  formats:
+    - fasta
+-
+  inputs:
+    - testing/testFiles/f001
+  outputs:
+    - f001.aln
+  formats:
+    - clustal
+-
+  inputs:
+    - testing/testFiles/f001
+  outputs:
+    - f001.nex
+  formats:
+    - nexus
+  alphabet:
+    - prot
+-
+  inputs:
+    - testing/testFiles/cw02.aln
+    - testing/testFiles/hedgehog.aln
+    - testing/testFiles/odd_consensus.aln
+  outputs:
+    - cw02.nex
+    - hedgehog.nex
+    - odd_consensus.nex
+  formats:
+    - nexus
+  alphabet:
+    - prot
+-
+  inputs:
+    - testing/testFiles/interleaved.phy
+    - testing/testFiles/hennigian.phy
+    - testing/testFiles/horses.phy
+  outputs:
+    - interlaved.nex
+    - hennigian.nex
+    - horses.nex
+  formats:
+    - nexus
+  alphabet:
+    - prot
 ...
