@@ -52,7 +52,8 @@
     - int_node_labels.xml
   formats:
     - phyloxml
--  inputs:
+-
+  inputs:
     - testing/testFiles/cw02.aln
     - testing/testFiles/hedgehog.aln
     - testing/testFiles/odd_consensus.aln
@@ -101,7 +102,7 @@
   outputs:
     - interlaved.nex
     - hennigian.nex
-    - horses.nex
+    - horses.nex*
   formats:
     - nexus
   alphabet:
