@@ -1,8 +1,8 @@
 # BioMagick User Guide
 
+## Comand Line Interface Overview
 
 ```
-
 usage: BioMagick.py [-h] [-i INPATH] [-s] [-o OUTPATH] [-f OUTFORMAT]
 
                     [-a ALPHA] [-j JOBS]
