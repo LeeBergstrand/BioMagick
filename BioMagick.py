@@ -211,7 +211,7 @@ if __name__ == '__main__':
 	# Command line interface options
 	# ------------------------------
 	parser = argparse.ArgumentParser()
-	parser.add_argument('-i', '--input', metavar='INPATH', nargs='1', help='''
+	parser.add_argument('-i', '--input', metavar='INPATH', nargs=1, help='''
 	A comma-separated list of input file paths. If not specified, input is read from stdin.''')
 
 	parser.add_argument('-s', '--stdout', dest="stdout", action='store_true', help='''
@@ -220,7 +220,7 @@ if __name__ == '__main__':
 	parser.add_argument('-o', '--outdir', metavar='OUTPATH', nargs=1, help='''
 	An output directory for output files. If not specified, the current working directory is used.''')
 
-	parser.add_argument('-f', '--outfmt', metavar='OUTFORMAT', nargs='1', help='''
+	parser.add_argument('-f', '--outfmt', metavar='OUTFORMAT', nargs=1, help='''
 	A comma-separated list of output file formats.''')
 
 	parser.add_argument('-a', '--alphabet', metavar='ALPHA', nargs=1, help='''
