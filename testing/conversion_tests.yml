@@ -79,8 +79,7 @@
     - f001.nex
   formats:
     - nexus
-  alphabet:
-    - prot
+  alphabet: prot
 -
   inputs:
     - testing/testFiles/cw02.aln
@@ -92,19 +91,17 @@
     - odd_consensus.nex
   formats:
     - nexus
-  alphabet:
-    - prot
+  alphabet: prot
 -
   inputs:
     - testing/testFiles/interleaved.phy
     - testing/testFiles/hennigian.phy
     - testing/testFiles/horses.phy
   outputs:
-    - interlaved.nex
+    - interleaved.nex
     - hennigian.nex
-    - horses.nex*
+    - horses.nex
   formats:
     - nexus
-  alphabet:
-    - prot
+  alphabet: prot
 ...
