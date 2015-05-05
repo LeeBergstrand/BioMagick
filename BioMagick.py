@@ -239,8 +239,8 @@ if __name__ == '__main__':
 		parser.print_help()
 		sys.exit(1)
 
-	# try:
-	main(cli_args)
-	# except Exception as ex:
-	#	print("\nError: %s" % ex)
-	#	sys.exit(1)
+	try:
+		main(cli_args)
+	except Exception as ex:
+		print("\nError: %s" % ex)
+		sys.exit(1)
