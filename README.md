@@ -61,25 +61,25 @@ Dependencies
 
 Command Line Interface Overview
 -------------------------------
-    usage: BioMagick.py [-h] [-i INPATH [INPATH ...]] [-s] [-o OUTPATH]
-                    [-f OUTFORMAT [OUTFORMAT ...]] [-a ALPHA] [-j JOBS]
+usage: BioMagick.py [-h] [-i INPATH] [-s] [-o OUTPATH] [-f OUTFORMAT]
+                    [-a ALPHA] [-j JOBS]
 
-    optional arguments:
-      -h, --help            show this help message and exit
-      -i INPATH [INPATH ...], --input INPATH [INPATH ...]
-                        A list of input file paths. If not specified, input is
-                        read from stdin.
-      -s, --stdout          Output result of single-file conversion to stdout.
-      -o OUTPATH, --outdir OUTPATH
+optional arguments:
+  -h, --help            show this help message and exit
+  -i INPATH, --input INPATH
+                        A comma-separated list of input file paths. If not
+                        specified, input is read from stdin.
+  -s, --stdout          Output result of single-file conversion to stdout.
+  -o OUTPATH, --outdir OUTPATH
                         An output directory for output files. If not
-                        specified, output is piped to stdout.
-      -f OUTFORMAT [OUTFORMAT ...], --outfmt OUTFORMAT [OUTFORMAT ...]
-                        A List of output file formats.
-      -a ALPHA, --alphabet ALPHA
+                        specified, the current working directory is used.
+  -f OUTFORMAT, --outfmt OUTFORMAT
+                        A comma-separated list of output file formats.
+  -a ALPHA, --alphabet ALPHA
                         The alphabet to use for conversion (ambigdna,
                         unambigdna, exdna, ambigrna, unambigrna, prot,
                         exprot).
-      -j JOBS, --jobs JOBS  The number of processes to use for multiple files
+  -j JOBS, --jobs JOBS  The number of processes to use for multiple files
                         (defaults to the number of processor cores).
                         
 Documentation

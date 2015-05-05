@@ -211,17 +211,17 @@ if __name__ == '__main__':
 	# Command line interface options
 	# ------------------------------
 	parser = argparse.ArgumentParser()
-	parser.add_argument('-i', '--input', metavar='INPATH', nargs=1, help='''
-	A comma-separated list of input file paths. If not specified, input is read from stdin.''')
+	parser.add_argument('-i', '--input', metavar='INPATH', nargs='+', help='''
+	A list of input file paths. If not specified, input is read from stdin.''')
 
 	parser.add_argument('-s', '--stdout', dest="stdout", action='store_true', help='''
 	Output result of single-file conversion to stdout.''')
 
 	parser.add_argument('-o', '--outdir', metavar='OUTPATH', nargs=1, help='''
-	An output directory for output files. If not specified, the current working directory is used.''')
+	An output directory for output files. If not specified, output is piped to stdout.''')
 
-	parser.add_argument('-f', '--outfmt', metavar='OUTFORMAT', nargs=1, help='''
-	A comma-separated list of output file formats.''')
+	parser.add_argument('-f', '--outfmt', metavar='OUTFORMAT', nargs='+', help='''
+	A List of output file formats.''')
 
 	parser.add_argument('-a', '--alphabet', metavar='ALPHA', nargs=1, help='''
 	The alphabet to use for conversion (ambigdna, unambigdna, exdna, ambigrna, unambigrna, prot, exprot).''')
@@ -239,8 +239,8 @@ if __name__ == '__main__':
 		parser.print_help()
 		sys.exit(1)
 
-	try:
-		main(cli_args)
-	except Exception as ex:
-		print("\nError: %s" % ex)
-		sys.exit(1)
+	#try:
+	main(cli_args)
+	#except Exception as ex:
+		#print("\nError: %s" % ex)
+		#sys.exit(1)
