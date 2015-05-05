@@ -6,28 +6,45 @@ BioMagick
 =========
 ### A next generation bioinformatics file format converter.
 
-BioMagick is a next generation bioinformatics file format converter built from Biopython's SeqIO, AlignIO and Phylo classes. It currently contain a class for auto-recognition of text and binary Bioinformatics file formats. The command line user interface (CLI) allows piped input from other UNIX programs and the input of multiple files. Automated tests have been created to validate that BioMagick is providing the correct output. Documentation will be in the form of a Github wiki.
+BioMagick is a next generation bioinformatics file format converter built from Biopython's SeqIO, AlignIO and Phylo classes. It currently contains a class for auto-recognition of text and binary Bioinformatics file formats. The command line user interface (CLI) allows piped input from other UNIX programs and the input of multiple files. Automated tests have been created to validate that BioMagick is providing a correct output. Documentation can be found in the Github wiki.
 
 Features
 --------
-- Capable of automatic file type recognition of one or more bioinformatic file formats or the bioinformatic file type of a text stream from stdin via BioID.
+- Capable of identifying the file type of both text and binary bioinformatic files as well as the file type of a text stream of a bioinformatic file piped into BioMagick via standard in.
 
-- Once input file type is identified Biomagick converts file or text stream to the user indicated file type (compatibility is determined by Biopython) and writes this converted file to disk or stdout (stdout can be used only if there was one input file).
+- Capable of converting multiple input files of different types or a singular text stream into one or more output formats (one output file per output format per input file or text stream) using a single command.
 
-- Capable of converting multiple different input files of different types to a single file type (Many to one conversion).
+- Capable of outputting the output of a single format conversion of a single input file or text stream to standard out.
 
-- Has multiprocessing support. By default creates one subprocess per CPU core and converts on input file per core in a work-crew manor.
+- Capable of multiprocessing with up to one input file being converted per CPU core.
+
+### The following formats are supported by BioMagick:
+
+| Format Name | BioMagick Name | Description                                                                                                                    |
+|-------------|----------------|--------------------------------------------------------------------------------------------------------------------------------|
+| FASTA       | fasta          | This refers to the input FASTA file format introduced for Bill Pearson's FASTA tool, where each record starts with a ">" line. |
+| FASTQ       | fastq          | FASTQ files are a bit like FASTA files but also include sequencing qualities.                                                  |
+| PHYLIP      | phylip         | An alignment format used by the Phylip software package.                                                                                                           |
+| Clustal X   | clustal        | The alignment format of the Clustal X aligner.                                                                                  |
+| Genbank     | genbank        | The GenBank or GenPept flat file format.                                                                                       |
+| EMBL        | embl           | The EMBL flat file format.                                                                                                     |
+| SeqXML      | seqxml         | An XML-based sequence file format.                                                                                              |
+| PhyloXML    | phyloxml       | An XML-based phylogenetic tree file format.                                                                                      |
+| NeXML       | nexml          | An XML version of the Nexus format.                                                                                            |
+| Nexus       | nexus          | The NEXUS multiple alignment format, also known as PAUP format.                                                                |
+| Newick      | newick         | An phylogenetic tree file format used by the Newick software package.                                                           |
+| Stockholm   | stockholm      | The Stockholm alignment format is also known as PFAM format.                                                                   |
+| SFF         | sff            | Standard Flowgram Format (SFF) binary files produced by Roche 454 and IonTorrent/IonProton sequencing machines.                |
 
 Supported Operating Systems
 ---------------------------
-Biomagick is actively devleloped and tested on:
+Biomagick is actively developed and tested on:
 
 - Mac OSX
-- Linux (Primarily Ubuntu)
+- Linux (Tested On Ubuntu 12.04 LTS Server Edition 64 bit)
 - Windows 7
 
-Other unix operating systems and linux distros should work assuming that one can install Python and the required dependencies. 
-
+Other unix operating systems and linux distributions should work assuming that one can install Python and the required dependencies. 
 
 Dependencies
 ------------
@@ -39,17 +56,17 @@ Dependencies
 
 ### To install dependancies on UNIX operating systems:
 
-1. Use a package manager to install python if it is not present in your OS.
+1. Use a package manager to install python if it is not included in your OS.
 
 	```
-	sudo apt-get install python # Ex. for Debian based linux 
+	sudo apt-get install python # Ex. for debian-based linux distributions
 	```
-2. Intall pip
+2. Install pip
 
 	```
 	python get-pip.py
 	```
-3. Change directory to the BioMagick directory and intall python dependencies via pip
+3. Change directory to the BioMagick directory and install python dependencies via pip
 
 	```
 	cd ~/the_file_path/Biomagick/
@@ -61,31 +78,30 @@ Dependencies
 
 Command Line Interface Overview
 -------------------------------
-usage: BioMagick.py [-h] [-i INPATH] [-s] [-o OUTPATH] [-f OUTFORMAT]
-                    [-a ALPHA] [-j JOBS]
 
-optional arguments:
-  -h, --help            show this help message and exit
-  -i INPATH, --input INPATH
-                        A comma-separated list of input file paths. If not
-                        specified, input is read from stdin.
-  -s, --stdout          Output result of single-file conversion to stdout.
-  -o OUTPATH, --outdir OUTPATH
-                        An output directory for output files. If not
-                        specified, the current working directory is used.
-  -f OUTFORMAT, --outfmt OUTFORMAT
-                        A comma-separated list of output file formats.
-  -a ALPHA, --alphabet ALPHA
-                        The alphabet to use for conversion (ambigdna,
-                        unambigdna, exdna, ambigrna, unambigrna, prot,
-                        exprot).
-  -j JOBS, --jobs JOBS  The number of processes to use for multiple files
-                        (defaults to the number of processor cores).
-                        
+	usage: BioMagick.py [-h] [-i INPATH] [-s] [-o OUTPATH] [-f OUTFORMAT]
+	                    [-a ALPHA] [-j JOBS]
+	
+	optional arguments:
+	  -h, --help            show this help message and exit
+	  -i INPATH, --input INPATH
+	                        A comma-separated list of input file paths. If not
+	                        specified, input is read from stdin.
+	  -s, --stdout          Output result of single-file conversion to stdout.
+	  -o OUTPATH, --outdir OUTPATH
+	                        An output directory for output files. If not
+	                        specified, the current working directory is used.
+	  -f OUTFORMAT, --outfmt OUTFORMAT
+	                        A comma-separated list of output file formats.
+	  -a ALPHA, --alphabet ALPHA
+	                        The alphabet to use for conversion (ambigdna,
+	                        unambigdna, exdna, ambigrna, unambigrna, prot,
+	                        exprot).
+	  -j JOBS, --jobs JOBS  The number of processes to use for multiple files
+	                        (defaults to the number of processor cores).	                                                
 Documentation
 -------------
-Our documentation can be found in the **[Wiki](http://github.com/LeeBergstrand/BioMagick/wiki)**.
-
+Our documentation can be found in the **[Wiki](http://github.com/LeeBergstrand/BioMagick/wiki)**. There is also an included user guide.
 
 Trouble Shooting
 ----------------
@@ -133,7 +149,7 @@ File Manifest
 Licence
 -------
 
-BioMagick is open-sourced and released under [MIT License](http://en.wikipedia.org/wiki/MIT_License).
+BioMagick is open-source and released under [MIT License](http://en.wikipedia.org/wiki/MIT_License).
 
 	The MIT License (MIT)
 	
