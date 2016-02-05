@@ -1,5 +1,5 @@
-#### Development: ![Development](https://magnum.travis-ci.com/LeeBergstrand/BioMagick.svg?token=gFspxRhLX7xmypaS1yi5&branch=develop) 
-#### Master: ![master](https://magnum.travis-ci.com/LeeBergstrand/BioMagick.svg?token=gFspxRhLX7xmypaS1yi5&branch=master)
+#### Development: ![Development](https://travis-ci.org/LeeBergstrand/BioMagick.svg?branch=develop) 
+#### Master: ![master](https://travis-ci.org/LeeBergstrand/BioMagick.svg?branch=master)
 
 ---------------------------------------------------------------------
 BioMagick
